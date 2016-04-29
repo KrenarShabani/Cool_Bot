@@ -6,7 +6,8 @@ using UnityEngine;
 using System.Collections;
 using System;
 
-public class item : MonoBehaviour {
+public class item : MonoBehaviour
+{
     public int tagSet;
     public GameObject _item;
     private int amount = 10;
@@ -19,14 +20,14 @@ public class item : MonoBehaviour {
     public float maxSize;
     public float minSize;
 
- //   private static Vector3 dest = new Vector3(-1f, -2f, 0f);
+    //   private static Vector3 dest = new Vector3(-1f, -2f, 0f);
     private static Vector3 craftdest = new Vector3(-17f, 25f, 15f);
 
     public bool getCrafting() { return isCrafting; }
-    public int getAmount(){ return amount; }
-    public void decrement(){ amount--; }
-    public void increment(){ amount++; }
-    public void setCrafting(bool t){ isCrafting = t; }
+    public int getAmount() { return amount; }
+    public void decrement() { amount--; }
+    public void increment() { amount++; }
+    public void setCrafting(bool t) { isCrafting = t; }
     public void setAmount(int n) { amount = n; }
     private Vector3 te = new Vector3(0, 180, 0);
 
@@ -40,7 +41,7 @@ public class item : MonoBehaviour {
             Debug.DrawRay(ray.origin, ray.direction * 74f, Color.cyan);
             if (Physics.Raycast(ray, out hit, 74f, LayerMask))
             {
-                int hitColliders = (Physics.OverlapBox(new Vector3 (hit.point.x, hit.point.y, hit.point.z),new Vector3(1,1,1))).Length;
+                int hitColliders = (Physics.OverlapBox(new Vector3(hit.point.x, hit.point.y, hit.point.z), new Vector3(1, 1, 1))).Length;
 
                 if (hitColliders < 2)
                     _item.transform.position = new Vector3(shiftx * (float)(Math.Round((hit.point.x / shiftx))), 2.4f * (float)(Math.Round((hit.point.y / 2.4))), hit.point.z);
@@ -64,8 +65,8 @@ public class item : MonoBehaviour {
         // this is for when item is in crafting box
         if (Input.GetMouseButtonDown(1) && !isCrafting)
         {
-           /* _item.transform.localScale -= new Vector3(1f, 1f, 1f);
-            StartCoroutine("makeBigger");*/
+            /* _item.transform.localScale -= new Vector3(1f, 1f, 1f);
+             StartCoroutine("makeBigger");*/
             moveToCrafting();
         }
 
