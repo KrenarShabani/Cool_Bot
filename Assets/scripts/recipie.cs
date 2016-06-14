@@ -7,7 +7,8 @@ using UnityEngine;
 using System.Collections;
 using System;
 
-public class recipie : MonoBehaviour {
+public class recipie : MonoBehaviour
+{
     private GameObject parent;
     private GameObject createe;
     public TextMesh requirements;
@@ -20,18 +21,18 @@ public class recipie : MonoBehaviour {
     void start()
     {
         requirements.characterSize = 10;
-       // requirements.fontSize = 30;
+        // requirements.fontSize = 30;
         //requirements.text = ("Select a recipe!");
     }
     public void updateRecipe(String[] re, int[] ne, GameObject cre)
     {
-        
+
         GameObject[] old = GameObject.FindGameObjectsWithTag("display");
         for (int i = 0; i < old.Length; i++)
         {
             Destroy(old[i]);
         }
-        
+
         recipe = re;
         needed = ne;
         createe = cre;
@@ -44,9 +45,9 @@ public class recipie : MonoBehaviour {
         float x = 0;
         for (int i = 0; i < recipe.Length; i++)
         {
-            temp = (GameObject)Instantiate(GameObject.FindGameObjectWithTag(recipe[i].Substring(0,recipe[i].Length-5)),loc, Quaternion.identity);
+            temp = (GameObject)Instantiate(GameObject.FindGameObjectWithTag(recipe[i].Substring(0, recipe[i].Length - 5)), loc, Quaternion.identity);
             temp.transform.parent = parent.transform;
-            temp.transform.localPosition = new Vector3(loc.x+x, loc.y);
+            temp.transform.localPosition = new Vector3(loc.x + x, loc.y);
             temp.GetComponentInChildren<text>().setNull();
             temp.GetComponent<Rigidbody>().detectCollisions = false;
             temp.tag = ("display");
@@ -112,7 +113,7 @@ public class recipie : MonoBehaviour {
                 New.GetComponentInChildren<text>().setNewNum();
                 New.tag = UnityEditorInternal.InternalEditorUtility.tags[New.GetComponent<item>().tagSet];
             }
-            parent.GetComponent<item_manager>().fuckunityfam(needed,recipe);
+            parent.GetComponent<item_manager>().fuckunityfam(needed, recipe);
         }
     }
 }

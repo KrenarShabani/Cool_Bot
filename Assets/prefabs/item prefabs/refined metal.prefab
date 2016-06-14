@@ -13,7 +13,6 @@ GameObject:
   - 65: {fileID: 6569682}
   - 23: {fileID: 2387350}
   - 114: {fileID: 11450750}
-  - 114: {fileID: 11450550}
   - 64: {fileID: 6471030}
   m_Layer: 0
   m_Name: refined metal
@@ -197,19 +196,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _item: {fileID: 105574}
   amount: {fileID: 10271954}
---- !u!114 &11450550
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 105574}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d84ac1271e8b3de458030dd92b25388e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _item: {fileID: 105574}
-  parent: {fileID: 0}
 --- !u!114 &11450750
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -13,7 +13,6 @@ GameObject:
   - 23: {fileID: 2317672}
   - 54: {fileID: 5442956}
   - 114: {fileID: 11459748}
-  - 114: {fileID: 11430828}
   m_Layer: 0
   m_Name: rock
   m_TagString: Untagged
@@ -100,7 +99,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 10100, guid: 0000000000000000e000000000000000, type: 0}
+  - {fileID: 2100000, guid: 3a7e1990f81cc704ebd2fc14fafc0ef4, type: 3}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -159,15 +158,15 @@ TextMesh:
   m_GameObject: {fileID: 189214}
   m_Text: 123
   m_OffsetZ: 0
-  m_CharacterSize: 1
+  m_CharacterSize: 0.25
   m_LineSpacing: 1
   m_Anchor: 0
   m_Alignment: 0
   m_TabSize: 4
-  m_FontSize: 0
+  m_FontSize: 55
   m_FontStyle: 0
   m_RichText: 1
-  m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+  m_Font: {fileID: 12800000, guid: 3a7e1990f81cc704ebd2fc14fafc0ef4, type: 3}
   m_Color:
     serializedVersion: 2
     rgba: 4294901760
@@ -184,19 +183,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _item: {fileID: 186442}
   amount: {fileID: 10249616}
---- !u!114 &11430828
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 186442}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d84ac1271e8b3de458030dd92b25388e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _item: {fileID: 186442}
-  parent: {fileID: 0}
 --- !u!114 &11459748
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -210,6 +196,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tagSet: 9
   _item: {fileID: 186442}
+  maxSize: 1.5
+  minSize: 1
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
