@@ -28,18 +28,18 @@ public class controler : MonoBehaviour
         forward = forward.normalized;
 
         right = new Vector3(forward.z, 0, -forward.x);
-        
+
         if (controller.isGrounded)
         {
-          //  ani.Play("Default Take" , -1, 0f);
-          // moveDirection = (Input.GetAxis("Horizontal") * right + Input.GetAxis("Vertical") * forward).normalized;
+            //  ani.Play("Default Take" , -1, 0f);
+            // moveDirection = (Input.GetAxis("Horizontal") * right + Input.GetAxis("Vertical") * forward).normalized;
             //transform.rotation.SetLookRotation(right);
             moveDirection.x = (Input.GetAxis("Horizontal") * right + Input.GetAxis("Vertical") * forward).x * speed;
             moveDirection.z = (Input.GetAxis("Vertical") * forward + Input.GetAxis("Horizontal") * right).z * speed;
 
-           //o moveDirection = transform.TransformDirection(moveDirection);
-           // transform.rotation = moveDirection;
-          //  moveDirection = moveDirection * speed;
+            //o moveDirection = transform.TransformDirection(moveDirection);
+            // transform.rotation = moveDirection;
+            //  moveDirection = moveDirection * speed;
 
             if (Input.GetButton("Jump"))
             {
@@ -48,25 +48,23 @@ public class controler : MonoBehaviour
         }
         else {
             //moveDirection = (Input.GetAxis("Horizontal") * right + Input.GetAxis("Vertical") * forward+ Vector3.up*moveDirection.y).normalized;
-             moveDirection.x = (Input.GetAxis("Horizontal") * right + Input.GetAxis("Vertical") * forward).x * speed; 
-             moveDirection.z = (Input.GetAxis("Vertical") * forward + Input.GetAxis("Horizontal") * right).z * speed;
+            moveDirection.x = (Input.GetAxis("Horizontal") * right + Input.GetAxis("Vertical") * forward).x * speed;
+            moveDirection.z = (Input.GetAxis("Vertical") * forward + Input.GetAxis("Horizontal") * right).z * speed;
         }
         moveDirection.y -= gravity * Time.deltaTime;
         float hori = Input.GetAxis("Horizontal");
         float verti = Input.GetAxis("Vertical");
         transform.rotation.Set(0, 0, 0, 0);
-        if ((Input.GetKey(KeyCode.W) || (Input.GetKey(KeyCode.S))) && (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)))
-            transform.rotation = Quaternion.LookRotation(Input.GetAxis("Horizontal") * right + Input.GetAxis("Vertical") * forward);
-        else if (!(Input.GetKey(KeyCode.W) || (Input.GetKey(KeyCode.S))) && (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)))
-            transform.rotation = Quaternion.LookRotation(Input.GetAxis("Horizontal") * right) * new Quaternion(0,0,0,preserve.w);
-        else if ((Input.GetKey(KeyCode.W) || (Input.GetKey(KeyCode.S))) && !(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)))
-            transform.rotation = Quaternion.LookRotation( Input.GetAxis("Vertical") * forward* -1) * new Quaternion(0,preserve.y,0,0);
-        else if (!(Input.GetKey(KeyCode.W) || (Input.GetKey(KeyCode.S))) && !(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)))
+
+        if ((Input.GetKey(KeyCode.W) || (Input.GetKey(KeyCode.S))) || (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)))
+            transform.rotation = Quaternion.Lerp(preserve,Quaternion.LookRotation(Input.GetAxis("Horizontal") * right + Input.GetAxis("Vertical") * forward), 12f * Time.deltaTime);
+        else
             transform.rotation = preserve;
 
         controller.Move(moveDirection * Time.deltaTime);
-        print( transform.rotation + " " + Input.GetAxis("Vertical") + " " + Input.GetAxis("Horizontal"));
-        preserve = new Quaternion(transform.rotation.x,transform.rotation.y,transform.rotation.z,transform.rotation.w);
+        print(transform.rotation + " " + Input.GetAxis("Vertical") + " " + Input.GetAxis("Horizontal"));
+        preserve = new Quaternion(transform.rotation.x, transform.rotation.y, transform.rotation.z, transform.rotation.w);
+
         
         //transform.rotation.SetLookRotation((Input.GetAxis("Horizontal") * right + Input.GetAxis("Vertical") * forward));
     }
