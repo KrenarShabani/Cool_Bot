@@ -12,6 +12,7 @@ public class controler : MonoBehaviour
     private Vector3 right = Vector3.zero;
     public Camera gCam;
     public Animator ani;
+    private Quaternion preserve;
     // Use this for initialization
     void Start()
     {
@@ -51,9 +52,22 @@ public class controler : MonoBehaviour
              moveDirection.z = (Input.GetAxis("Vertical") * forward + Input.GetAxis("Horizontal") * right).z * speed;
         }
         moveDirection.y -= gravity * Time.deltaTime;
-        transform.rotation = Quaternion.LookRotation(Input.GetAxis("Horizontal") * right + Input.GetAxis("Vertical") * forward);
-        controller.Move(moveDirection * Time.deltaTime); 
+        float hori = Input.GetAxis("Horizontal");
+        float verti = Input.GetAxis("Vertical");
+        transform.rotation.Set(0, 0, 0, 0);
+        if ((Input.GetKey(KeyCode.W) || (Input.GetKey(KeyCode.S))) && (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)))
+            transform.rotation = Quaternion.LookRotation(Input.GetAxis("Horizontal") * right + Input.GetAxis("Vertical") * forward);
+        else if (!(Input.GetKey(KeyCode.W) || (Input.GetKey(KeyCode.S))) && (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)))
+            transform.rotation = Quaternion.LookRotation(Input.GetAxis("Horizontal") * right) * new Quaternion(0,0,0,preserve.w);
+        else if ((Input.GetKey(KeyCode.W) || (Input.GetKey(KeyCode.S))) && !(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)))
+            transform.rotation = Quaternion.LookRotation( Input.GetAxis("Vertical") * forward* -1) * new Quaternion(0,preserve.y,0,0);
+        else if (!(Input.GetKey(KeyCode.W) || (Input.GetKey(KeyCode.S))) && !(Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)))
+            transform.rotation = preserve;
 
+        controller.Move(moveDirection * Time.deltaTime);
+        print( transform.rotation + " " + Input.GetAxis("Vertical") + " " + Input.GetAxis("Horizontal"));
+        preserve = new Quaternion(transform.rotation.x,transform.rotation.y,transform.rotation.z,transform.rotation.w);
+        
         //transform.rotation.SetLookRotation((Input.GetAxis("Horizontal") * right + Input.GetAxis("Vertical") * forward));
     }
 }
