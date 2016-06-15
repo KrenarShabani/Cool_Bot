@@ -27,6 +27,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -54,6 +55,13 @@ Material:
           m_Offset: {x: 0, y: 0}
       data:
         first:
+          name: _ShadowTex
+        second:
+          m_Texture: {fileID: 2800000, guid: 177301c9f4cc84a4c9d3844e0627dbbc, type: 3}
+          m_Scale: {x: 1, y: 1}
+          m_Offset: {x: 0, y: 0}
+      data:
+        first:
           name: _BumpSpecMap
         second:
           m_Texture: {fileID: 2800000, guid: ca7b999ee676bdc49a7b811f10899404, type: 3}
@@ -64,13 +72,6 @@ Material:
           name: _TranslucencyMap
         second:
           m_Texture: {fileID: 2800000, guid: b4b2da932d7fd2848b85223f0da85418, type: 3}
-          m_Scale: {x: 1, y: 1}
-          m_Offset: {x: 0, y: 0}
-      data:
-        first:
-          name: _ShadowTex
-        second:
-          m_Texture: {fileID: 2800000, guid: 177301c9f4cc84a4c9d3844e0627dbbc, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
     m_Floats:
