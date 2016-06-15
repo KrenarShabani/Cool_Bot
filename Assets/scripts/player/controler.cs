@@ -55,6 +55,7 @@ public class controler : MonoBehaviour
         float hori = Input.GetAxis("Horizontal");
         float verti = Input.GetAxis("Vertical");
         transform.rotation.Set(0, 0, 0, 0);
+
         if ((Input.GetKey(KeyCode.W) || (Input.GetKey(KeyCode.S))) || (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)))
             transform.rotation = Quaternion.Lerp(preserve,Quaternion.LookRotation(Input.GetAxis("Horizontal") * right + Input.GetAxis("Vertical") * forward), 12f * Time.deltaTime);
         else
@@ -64,6 +65,10 @@ public class controler : MonoBehaviour
         print(transform.rotation + " " + Input.GetAxis("Vertical") + " " + Input.GetAxis("Horizontal"));
         preserve = new Quaternion(transform.rotation.x, transform.rotation.y, transform.rotation.z, transform.rotation.w);
 
+        controller.Move(moveDirection * Time.deltaTime);
+        print( transform.rotation + " " + Input.GetAxis("Vertical") + " " + Input.GetAxis("Horizontal"));
+        preserve = new Quaternion(transform.rotation.x,transform.rotation.y,transform.rotation.z,transform.rotation.w);
+        
         //transform.rotation.SetLookRotation((Input.GetAxis("Horizontal") * right + Input.GetAxis("Vertical") * forward));
     }
 }
