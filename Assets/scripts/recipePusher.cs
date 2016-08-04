@@ -17,7 +17,6 @@ public class recipePusher : MonoBehaviour {
 
     public void pushRecipie()
     {
-
         GameObject.FindGameObjectWithTag("itemmanager").GetComponent<recipie>().updateRecipe(recipe, needed, createe);
     }
 }

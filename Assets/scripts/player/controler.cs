@@ -12,7 +12,7 @@ public class controler : MonoBehaviour
     private Vector3 right = Vector3.zero;
     public Camera gCam;
     public Animator ani;
-    private Quaternion preserve;
+    private Quaternion preserve = new Quaternion();
     // Use this for initialization
     void Start()
     {
@@ -31,6 +31,12 @@ public class controler : MonoBehaviour
 
         if (controller.isGrounded)
         {
+            ani.SetBool("isInTheAir", false);
+
+
+
+
+
             //  ani.Play("Default Take" , -1, 0f);
             // moveDirection = (Input.GetAxis("Horizontal") * right + Input.GetAxis("Vertical") * forward).normalized;
             //transform.rotation.SetLookRotation(right);
@@ -41,9 +47,15 @@ public class controler : MonoBehaviour
             // transform.rotation = moveDirection;
             //  moveDirection = moveDirection * speed;
 
-            if (Input.GetButton("Jump"))
+            if (Input.GetButtonDown("Jump") && !ani.GetCurrentAnimatorStateInfo(0).IsName("punching") && !ani.IsInTransition(0))
             {
                 moveDirection.y = jumpSpeed;
+                ani.SetBool("isInTheAir", true);
+            }
+
+            if (Input.GetMouseButtonDown(0) & !ani.GetCurrentAnimatorStateInfo(0).IsName("punching") & ani.GetAnimatorTransitionInfo(0).normalizedTime < 0.10f )
+            {
+                ani.SetTrigger("punch");
             }
         }
         else {
@@ -54,18 +66,35 @@ public class controler : MonoBehaviour
         moveDirection.y -= gravity * Time.deltaTime;
         float hori = Input.GetAxis("Horizontal");
         float verti = Input.GetAxis("Vertical");
-        transform.rotation.Set(0, 0, 0, 0);
+        //transform.rotation.Set(0, 0, 0, 0);
 
-        if ((Input.GetKey(KeyCode.W) || (Input.GetKey(KeyCode.S))) || (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)))
-            transform.rotation = Quaternion.Lerp(preserve,Quaternion.LookRotation(Input.GetAxis("Horizontal") * right + Input.GetAxis("Vertical") * forward), 12f * Time.deltaTime);
+        if (((Input.GetKey(KeyCode.W) || (Input.GetKey(KeyCode.S))) || (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))))
+        {
+            if (!ani.GetCurrentAnimatorStateInfo(0).IsName("punching"))
+                transform.rotation = Quaternion.Lerp(preserve, Quaternion.LookRotation(Input.GetAxis("Horizontal") * right + Input.GetAxis("Vertical") * forward), 12f * Time.deltaTime);
+            ani.SetBool("ismoving", true);
+           // controller.Move(moveDirection * Time.deltaTime);
+           // ani.Play("walking", -1, 0f);
+        }
         else
+        {
             transform.rotation = preserve;
+            ani.SetBool("ismoving", false);
+           // ani.Play("idle", -1, 0f);
+        }
 
-        controller.Move(moveDirection * Time.deltaTime);
-        print(transform.rotation + " " + Input.GetAxis("Vertical") + " " + Input.GetAxis("Horizontal"));
-        preserve = new Quaternion(transform.rotation.x, transform.rotation.y, transform.rotation.z, transform.rotation.w);
+        if (!ani.GetCurrentAnimatorStateInfo(0).IsName("punching")) 
+        { 
+            controller.Move(moveDirection * Time.deltaTime);
+        }
 
+        //print(transform.rotation + " " + Input.GetAxis("Vertical") + " " + Input.GetAxis("Horizontal"));
+       // preserve = new Quaternion(transform.rotation.x, transform.rotation.y, transform.rotation.z, transform.rotation.w);
+        preserve = transform.rotation;
         
         //transform.rotation.SetLookRotation((Input.GetAxis("Horizontal") * right + Input.GetAxis("Vertical") * forward));
+
+
     }
+
 }

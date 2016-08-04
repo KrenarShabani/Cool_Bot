@@ -22,7 +22,6 @@ public class item_manager: MonoBehaviour {
     void Start ()
     {
         items = GetComponentsInChildren<item>();
-
         for (int i = 0; i < items.Length; i++)
         {
             items[i].tag = UnityEditorInternal.InternalEditorUtility.tags[items[i].GetComponent<item>().tagSet];
