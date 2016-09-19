@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class controler : MonoBehaviour
 {
@@ -33,10 +34,6 @@ public class controler : MonoBehaviour
         {
             ani.SetBool("isInTheAir", false);
 
-
-
-
-
             //  ani.Play("Default Take" , -1, 0f);
             // moveDirection = (Input.GetAxis("Horizontal") * right + Input.GetAxis("Vertical") * forward).normalized;
             //transform.rotation.SetLookRotation(right);
@@ -53,7 +50,7 @@ public class controler : MonoBehaviour
                 ani.SetBool("isInTheAir", true);
             }
 
-            if (Input.GetMouseButtonDown(0) & !ani.GetCurrentAnimatorStateInfo(0).IsName("punching") & ani.GetAnimatorTransitionInfo(0).normalizedTime < 0.10f )
+            if (Input.GetKeyDown(KeyCode.F) & !ani.GetCurrentAnimatorStateInfo(0).IsName("punching") & ani.GetAnimatorTransitionInfo(0).normalizedTime < 0.10f )
             {
                 ani.SetTrigger("punch");
             }
@@ -64,8 +61,6 @@ public class controler : MonoBehaviour
             moveDirection.z = (Input.GetAxis("Vertical") * forward + Input.GetAxis("Horizontal") * right).z * speed;
         }
         moveDirection.y -= gravity * Time.deltaTime;
-        float hori = Input.GetAxis("Horizontal");
-        float verti = Input.GetAxis("Vertical");
         //transform.rotation.Set(0, 0, 0, 0);
 
         if (((Input.GetKey(KeyCode.W) || (Input.GetKey(KeyCode.S))) || (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))))
@@ -91,10 +86,18 @@ public class controler : MonoBehaviour
         //print(transform.rotation + " " + Input.GetAxis("Vertical") + " " + Input.GetAxis("Horizontal"));
        // preserve = new Quaternion(transform.rotation.x, transform.rotation.y, transform.rotation.z, transform.rotation.w);
         preserve = transform.rotation;
-        
-        //transform.rotation.SetLookRotation((Input.GetAxis("Horizontal") * right + Input.GetAxis("Vertical") * forward));
 
+        //transform.rotation.SetLookRotation((Input.GetAxis("Horizontal") * right + Input.GetAxis("Vertical") * forward));
+        if (Input.GetKey(KeyCode.I))
+            SceneManager.LoadScene("inventory");
 
     }
+
+    void OnKeyPress()
+    {
+
+    }
+            
+            
 
 }

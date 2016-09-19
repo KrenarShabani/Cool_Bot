@@ -41,7 +41,7 @@ public class anotherCAMFAM : MonoBehaviour {
     Vector3 targetPos = Vector3.zero;
     Vector3 destination = Vector3.zero;
     CharacterController charController;
-    float vOrbitInput, hOrbitInput, zoomInput, hOrbitSnapInput;
+   // float vOrbitInput, hOrbitInput, zoomInput, hOrbitSnapInput;
     
 	// Use this for initialization
 	void Start () {
@@ -63,17 +63,17 @@ public class anotherCAMFAM : MonoBehaviour {
         MoveToTarget();
         LookAtTarget();
 	}
-    void GetInput()
+  /*  void GetInput()
     {
         vOrbitInput = Input.GetAxisRaw(input.ORBIT_VERTICAL);
         hOrbitInput = Input.GetAxisRaw(input.ORBIT_HORIZONTAL);
         hOrbitSnapInput = Input.GetAxisRaw(input.ORBIT_HOTIZONTAL_SNAP);
         zoomInput = Input.GetAxisRaw(input.ZOOM);
-    }
+    }*/
 
     void Update() 
     {
-        GetInput();
+       // GetInput();
         OribitTarget();
         ZoomInOnTarget();
     }
@@ -90,7 +90,7 @@ public class anotherCAMFAM : MonoBehaviour {
     }
     void OribitTarget()
     {
-        if (hOrbitSnapInput > 0)
+       /* if (hOrbitSnapInput > 0)
         {
             orbit.yRotation = -180;
         }
@@ -104,7 +104,7 @@ public class anotherCAMFAM : MonoBehaviour {
         if (orbit.xRotation < orbit.minXRotation)
         {
             orbit.xRotation = orbit.minXRotation;
-        }
+        }*/
     }
     void ZoomInOnTarget()
     {

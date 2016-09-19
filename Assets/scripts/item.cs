@@ -30,7 +30,10 @@ public class item : MonoBehaviour
     public void setCrafting(bool t) { isCrafting = t; }
     public void setAmount(int n) { amount = n; }
     private Vector3 te = new Vector3(0, 180, 0);
-
+    void Start()
+    {
+        //DontDestroyOnLoad(transform.gameObject);
+    }
     void Update()
     {
         if (otherflag & !isCrafting)

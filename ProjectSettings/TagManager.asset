@@ -17,6 +17,7 @@ TagManager:
   - itemmanager
   - craftbutton
   - display
+  - target
   layers:
   - Default
   - TransparentFX

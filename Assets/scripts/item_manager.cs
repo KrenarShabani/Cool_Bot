@@ -6,18 +6,20 @@
 using UnityEngine;
 using System.Collections;
 using System;
+using UnityEngine.SceneManagement;
 
 public class item_manager: MonoBehaviour {
     private Component[] items;
-    private static float xinitial = 9.2f;
-    private static float yinitial = 4f;
-    protected static float xshift = 2.1f;
-    protected static float yshift = 2.4f;
+    private   float xinitial = 9.2f;
+    private   float yinitial = 4f;
+    protected float xshift = 2.1f;
+    protected float yshift = 2.4f;
     
-    private static float x = 9.2f;
-    private static float y = 4f;
-    private static int cols = 7;
-    private static int numerator;
+    private   float x = 9.2f;
+    private   float y = 4f;
+    private   int cols = 7;
+    private   int numerator;
+    private string[] crafts;
 
     void Start ()
     {
@@ -32,6 +34,41 @@ public class item_manager: MonoBehaviour {
             items[i].GetComponentInChildren<text>().setNewNum();
             numerator = i;
         }
+        if (PlayerPrefs.HasKey("inventory"))
+        {
+            setupcrafts();
+            foreach (string s in crafts)
+            {
+                if (GameObject.FindGameObjectWithTag(UnityEditorInternal.InternalEditorUtility.tags[Int32.Parse(s)]))
+                {
+                    GameObject newmat = GameObject.FindGameObjectWithTag(UnityEditorInternal.InternalEditorUtility.tags[Int32.Parse(s)]);
+                    newmat.GetComponent<item>().setAmount(newmat.GetComponent<item>().getAmount() + PlayerPrefs.GetInt(s));
+                    newmat.GetComponentInChildren<text>().setNewNum();
+                }
+
+            }
+        }
+    }
+    void OnMouseDown()
+    {
+
+    }
+    void Update()
+    {
+
+        if (Input.GetKey(KeyCode.I))
+        {
+            SceneManager.LoadScene("level");
+        }
+
+    }
+
+    private void setupcrafts()
+    {
+        string splitter = PlayerPrefs.GetString("inventory");
+        crafts = new string[PlayerPrefs.GetString("inventory").Split(',').Length - 1];
+        crafts = splitter.Split(',');
+        //foreach (string s in crafts) print(s);
     }
     public void setPos(GameObject item)
     {

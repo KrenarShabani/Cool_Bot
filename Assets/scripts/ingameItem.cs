@@ -3,9 +3,9 @@ using System.Collections;
 
 public class ingameItem : MonoBehaviour {
     public GameObject item;
+    public int tagset;
 	// Use this for initialization
 	void Start () {
-       
 	}
 	
 	// Update is called once per frame
@@ -15,10 +15,14 @@ public class ingameItem : MonoBehaviour {
 
     void OnTriggerEnter(Collider other) 
     {
-        Debug.Log(other.name);
+       // Debug.Log(other.name);
         if (other.name == "Jackle") 
         {
-            Destroy(item);
-        }
+            if (!other.GetComponent<charinventory>().isFull())
+            {
+                other.GetComponent<charinventory>().addItem(tagset);
+                Destroy(item);
+            }
+         }
     }
 }

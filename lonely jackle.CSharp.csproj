@@ -63,17 +63,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\animation.cs" />
+    <Compile Include="Assets\dontdestory.cs" />
+    <Compile Include="Assets\scripts\bullet.cs" />
+    <Compile Include="Assets\scripts\combat\missle.cs" />
+    <Compile Include="Assets\scripts\ingameItem.cs" />
     <Compile Include="Assets\scripts\item.cs" />
     <Compile Include="Assets\scripts\item_manager.cs" />
     <Compile Include="Assets\scripts\player\animatorController.cs" />
     <Compile Include="Assets\scripts\player\anotherCAMFAM.cs" />
     <Compile Include="Assets\scripts\player\anotherController.cs" />
     <Compile Include="Assets\scripts\player\cameraMove.cs" />
+    <Compile Include="Assets\scripts\player\charinventory.cs" />
     <Compile Include="Assets\scripts\player\controler.cs" />
-    <Compile Include="Assets\scripts\player\lastfuckingtry.cs" />
     <Compile Include="Assets\scripts\player\movecam.cs" />
     <Compile Include="Assets\scripts\player\movement.cs" />
-    <Compile Include="Assets\scripts\player\simpleCam.cs" />
     <Compile Include="Assets\scripts\player\thirdPersonCam.cs" />
     <Compile Include="Assets\scripts\recipePusher.cs" />
     <Compile Include="Assets\scripts\recipie.cs" />
