@@ -18,9 +18,9 @@ public class ingameItem : MonoBehaviour {
        // Debug.Log(other.name);
         if (other.name == "Jackle") 
         {
-            if (!other.GetComponent<charinventory>().isFull())
+            if (!charinventory.isFull())
             {
-                other.GetComponent<charinventory>().addItem(tagset);
+                charinventory.addItem(tagset);
                 Destroy(item);
             }
          }

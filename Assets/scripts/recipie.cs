@@ -45,7 +45,13 @@ public class recipie : MonoBehaviour
         float x = 0;
         for (int i = 0; i < recipe.Length; i++)
         {
-            temp = (GameObject)Instantiate(GameObject.FindGameObjectWithTag(recipe[i].Substring(0, recipe[i].Length - 5)), loc, Quaternion.identity);
+            //temp = (GameObject)Instantiate(GameObject.FindGameObjectWithTag(recipe[i].Substring(0, recipe[i].Length - 5)), loc, Quaternion.identity);
+            print("Assets/prefabs/item prefabs/" + recipe[i].Substring(0, recipe[i].Length - 5) + ".prefab"); 
+            temp = (GameObject)Instantiate((GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/prefabs/item prefabs/" + recipe[i].Substring(0, recipe[i].Length - 5) + ".prefab", typeof(GameObject)));
+
+            if (temp.GetComponent<Renderer>().enabled == false)
+                temp.GetComponent<Renderer>().enabled = true;
+            
             temp.transform.parent = parent.transform;
             temp.transform.localPosition = new Vector3(loc.x + x, loc.y);
             temp.GetComponentInChildren<text>().setNull();
@@ -57,6 +63,10 @@ public class recipie : MonoBehaviour
         display = display.Substring(0, display.Length - 3);
         display += '=';
         temp = (GameObject)Instantiate(createe, loc, Quaternion.identity);
+
+        if (temp.GetComponent<Renderer>().enabled == false)
+            temp.GetComponent<Renderer>().enabled = true;
+
         temp.transform.parent = parent.transform;
         temp.transform.localPosition = new Vector3(loc.x + x, loc.y);
         temp.GetComponentInChildren<text>().setNull();
@@ -112,8 +122,14 @@ public class recipie : MonoBehaviour
                 New.GetComponent<item>().setAmount(1);
                 New.GetComponentInChildren<text>().setNewNum();
                 New.tag = UnityEditorInternal.InternalEditorUtility.tags[New.GetComponent<item>().tagSet];
+
+                if (New.GetComponent<Renderer>().enabled == false)
+                    New.GetComponent<Renderer>().enabled = true;
+
             }
-            parent.GetComponent<item_manager>().fuckunityfam(needed, recipe);
+            charinventory.addItem(createe.GetComponent<item>().tagSet);
+            
+            parent.GetComponent<item_manager>().unityFam(needed, recipe);
         }
     }
 }

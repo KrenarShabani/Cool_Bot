@@ -2,13 +2,21 @@
 using System.Collections;
 
 public class charinventory : MonoBehaviour {
-    private string inventory;
-    int[] items;
-    int size = 0;
+    private static string INVENTORY;
+    private static string _inventory;
+    static int[] items;
+    static int size = 0;
 	// Use this for initialization
 	void Start () {
+        _inventory = "inventory";
         items = new int[10];
-        PlayerPrefs.DeleteAll();
+        
+        //print(PlayerPrefs.GetInt("9"));
+        //PlayerPrefs.DeleteAll();        
+        if (PlayerPrefs.GetString(_inventory) != null)
+            INVENTORY = PlayerPrefs.GetString(_inventory);
+           // INVENTORY = "13,11,9";
+       // PlayerPrefs.SetInt("15", 0);
 	}
 	
 	// Update is called once per frame
@@ -16,12 +24,14 @@ public class charinventory : MonoBehaviour {
 	
 	}
 
-    public void addItem(int tag)
+    public static void addItem(int tag)
     {
+
         items[size] = tag;
+        // print(items[size]);
         size++;
-       // print(items[size-1]);
-        if (PlayerPrefs.HasKey(tag.ToString()))
+
+        if (PlayerPrefs.GetInt(tag.ToString()) != 0)
         {
             PlayerPrefs.SetInt(tag.ToString(), PlayerPrefs.GetInt(tag.ToString()) + 1);
         }
@@ -29,19 +39,24 @@ public class charinventory : MonoBehaviour {
         {
 
             PlayerPrefs.SetInt(tag.ToString(), 1);
-            if (inventory == null)
+            if (INVENTORY == null)
             {
-                inventory = tag.ToString();
+                INVENTORY = tag.ToString();
+                //print(INVENTORY);
             }
             else
-                inventory += "," + tag.ToString();
+            {
+                INVENTORY += "," + tag.ToString();
+                //print(INVENTORY);            
+            }
+            PlayerPrefs.SetString(_inventory, INVENTORY);
         }
-        PlayerPrefs.SetString("inventory", inventory);
-        //print(PlayerPrefs.GetString("inventory"));
-        //print(PlayerPrefs.GetInt(tag.ToString()));
+        //PlayerPrefs.SetString(_inventory, INVENTORY);
+        print(PlayerPrefs.GetString(_inventory));
+        print(PlayerPrefs.GetInt(tag.ToString()));
     }
 
-    public bool isFull()
+    public static bool isFull()
     {
         if (size == items.Length)
             return true;

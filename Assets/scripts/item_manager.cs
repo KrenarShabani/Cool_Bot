@@ -1,5 +1,6 @@
 ﻿/*
-    -Make item movement snappier (done)Note : the horizontal edges are shitty
+    -Make item movement snappier (done)Note : the horizontal edges are shitty (reason is because the camera is in perspective mode 
+    and it affects the raycast)
 
 */
 
@@ -26,24 +27,41 @@ public class item_manager: MonoBehaviour {
         items = GetComponentsInChildren<item>();
         for (int i = 0; i < items.Length; i++)
         {
-            items[i].tag = UnityEditorInternal.InternalEditorUtility.tags[items[i].GetComponent<item>().tagSet];
-            if (items[i].GetComponent<Renderer>().enabled == false)
-                items[i].GetComponent<Renderer>().enabled = true;
-            setPos(i);
-
-            items[i].GetComponentInChildren<text>().setNewNum();
+            reveal(items[i].GetComponent<GameObject>());
             numerator = i;
         }
         if (PlayerPrefs.HasKey("inventory"))
         {
-            setupcrafts();
+            
+            crafts = Utilities.getCrafts();
             foreach (string s in crafts)
             {
+                //print(s);
                 if (GameObject.FindGameObjectWithTag(UnityEditorInternal.InternalEditorUtility.tags[Int32.Parse(s)]))
                 {
                     GameObject newmat = GameObject.FindGameObjectWithTag(UnityEditorInternal.InternalEditorUtility.tags[Int32.Parse(s)]);
+                   // print(GameObject.FindGameObjectWithTag(UnityEditorInternal.InternalEditorUtility.tags[Int32.Parse(s)]));
                     newmat.GetComponent<item>().setAmount(newmat.GetComponent<item>().getAmount() + PlayerPrefs.GetInt(s));
                     newmat.GetComponentInChildren<text>().setNewNum();
+                }
+                else 
+                {
+                    GameObject inst;
+                    //inst = 
+                    //inst =  (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/prefabs/item prefabs/energy crystal", typeof(GameObject));
+                    //print(UnityEditorInternal.InternalEditorUtility.tags[Int32.Parse(s)]);
+                    //print("Assets/prefabs/item prefabs/" + UnityEditorInternal.InternalEditorUtility.tags[Int32.Parse(s)] + ".prefab");
+                  
+                    inst = (GameObject)Instantiate((GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/prefabs/item prefabs/" + UnityEditorInternal.InternalEditorUtility.tags[Int32.Parse(s)] + ".prefab", typeof(GameObject)));
+
+                    reveal(inst);
+
+
+
+                    /*
+                    (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/prefabs/item prefabs/" +
+                        UnityEditorInternal.InternalEditorUtility.tags[Int32.Parse(s)], typeof(GameObject));
+                       */
                 }
 
             }
@@ -58,17 +76,25 @@ public class item_manager: MonoBehaviour {
 
         if (Input.GetKey(KeyCode.I))
         {
+            foreach (Component i in items) 
+            {
+                //print(i.GetComponent<item>().tagSet);
+                PlayerPrefs.SetInt(i.GetComponent<item>().tagSet.ToString(), i.GetComponent<item>().getAmount());
+            }
             SceneManager.LoadScene("level");
         }
 
     }
 
-    private void setupcrafts()
+    void reveal(GameObject item)
     {
-        string splitter = PlayerPrefs.GetString("inventory");
-        crafts = new string[PlayerPrefs.GetString("inventory").Split(',').Length - 1];
-        crafts = splitter.Split(',');
-        //foreach (string s in crafts) print(s);
+        item.tag = UnityEditorInternal.InternalEditorUtility.tags[item.GetComponent<item>().tagSet];
+        if (item.GetComponent<Renderer>().enabled == false)
+            item.GetComponent<Renderer>().enabled = true;
+        item.transform.parent = GameObject.Find("items").transform;
+        setPos(item);
+        item.GetComponent<item>().setAmount(PlayerPrefs.GetInt(item.GetComponent<item>().tagSet.ToString()));
+        item.GetComponentInChildren<text>().setNewNum();
     }
     public void setPos(GameObject item)
     {
@@ -97,6 +123,7 @@ public class item_manager: MonoBehaviour {
     }
     void setPos(int i)
     {
+        //print(i);
         if (i >= cols)
         {
             y -= yshift;
@@ -107,7 +134,8 @@ public class item_manager: MonoBehaviour {
         items[i].transform.localPosition = new Vector2(x, y);
     }
 
-    public void fuckunityfam(int[] needed, string[] recipe)
+
+    public void unityFam(int[] needed, string[] recipe)
     {
         StartCoroutine(cleanUp(needed, recipe));
     }
@@ -116,6 +144,7 @@ public class item_manager: MonoBehaviour {
         for (int i = 0; i < needed.Length; i++)
         {
             GameObject[] temp = GameObject.FindGameObjectsWithTag(recipe[i]);
+            PlayerPrefs.SetInt(temp[0].GetComponent<item>().tagSet.ToString(), PlayerPrefs.GetInt(temp[0].GetComponent<item>().tagSet.ToString()) - temp.Length);
             for (int j = 0; j < needed[i]; j++)
             {
                 Destroy(temp[j]);

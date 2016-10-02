@@ -13,17 +13,26 @@ public class controler : MonoBehaviour
     private Vector3 right = Vector3.zero;
     public Camera gCam;
     public Animator ani;
+    private BoxCollider punchCollider;
     private Quaternion preserve = new Quaternion();
     // Use this for initialization
     void Start()
     {
+        Component[] test;
+        test = GetComponentsInChildren<BoxCollider>();
+        //print(test.Length);
+        //print(test[0].name + " " + test[1].name);
         ani = GetComponent<Animator>();
         controller = GetComponent<CharacterController>();
+        punchCollider = (BoxCollider)test[1];
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        //punchCollider.transform.position += new Vector3(0, 0, .1f);
+       // punchCollider.transform.position += new Vector3(0, 0, -.1f);
         forward = gCam.transform.TransformDirection(Vector3.forward);
         forward.y = 0;
         forward = forward.normalized;
@@ -50,10 +59,14 @@ public class controler : MonoBehaviour
                 ani.SetBool("isInTheAir", true);
             }
 
-            if (Input.GetKeyDown(KeyCode.F) & !ani.GetCurrentAnimatorStateInfo(0).IsName("punching") & ani.GetAnimatorTransitionInfo(0).normalizedTime < 0.10f )
-            {
-                ani.SetTrigger("punch");
-            }
+           // if (Input.GetKeyDown(KeyCode.F) && !ani.GetCurrentAnimatorStateInfo(0).IsName("punching") && ani.GetAnimatorTransitionInfo(0).normalizedTime < 0.10f )
+           // {
+            //    ani.SetTrigger("punch");
+                //punchCollider.isTrigger = true;
+           // }
+        
+
+            
         }
         else {
             //moveDirection = (Input.GetAxis("Horizontal") * right + Input.GetAxis("Vertical") * forward+ Vector3.up*moveDirection.y).normalized;
@@ -66,8 +79,11 @@ public class controler : MonoBehaviour
         if (((Input.GetKey(KeyCode.W) || (Input.GetKey(KeyCode.S))) || (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))))
         {
             if (!ani.GetCurrentAnimatorStateInfo(0).IsName("punching"))
+            {
                 transform.rotation = Quaternion.Lerp(preserve, Quaternion.LookRotation(Input.GetAxis("Horizontal") * right + Input.GetAxis("Vertical") * forward), 12f * Time.deltaTime);
-            ani.SetBool("ismoving", true);
+                
+            } 
+           ani.SetBool("ismoving", true);
            // controller.Move(moveDirection * Time.deltaTime);
            // ani.Play("walking", -1, 0f);
         }
@@ -93,10 +109,11 @@ public class controler : MonoBehaviour
 
     }
 
-    void OnKeyPress()
+    public void setPunchBool(bool flag) 
     {
-
+        punchCollider.isTrigger = flag;
     }
+
             
             
 

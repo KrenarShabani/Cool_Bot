@@ -10,14 +10,15 @@ TagManager:
   - rockcraft
   - metal
   - metalcraft
-  - energy
-  - energycraft
+  - energy crystal
+  - energy crystalcraft
   - new
   - newcraft
   - itemmanager
   - craftbutton
   - display
   - target
+  - energy
   layers:
   - Default
   - TransparentFX

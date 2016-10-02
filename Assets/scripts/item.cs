@@ -53,6 +53,7 @@ public class item : MonoBehaviour
     }
     void OnMouseOver()
     {
+        print(_item.name);
         isMouseOver = true;
         if (!otherflag && !isCrafting && !isOnMouseDown)
         {
@@ -76,8 +77,11 @@ public class item : MonoBehaviour
         else if (Input.GetMouseButtonDown(1) && isCrafting)
         {
             //delete object and send it back to inventory
-            GameObject.FindGameObjectWithTag(UnityEditorInternal.InternalEditorUtility.tags[_item.GetComponent<item>().tagSet]).GetComponent<item>().increment();
-            GameObject.FindGameObjectWithTag(UnityEditorInternal.InternalEditorUtility.tags[_item.GetComponent<item>().tagSet]).GetComponentInChildren<text>().setNewNum();
+            //GameObject.FindGameObjectWithTag(InternalEditorUtility.tags[_item.GetComponent<item>().tagSet]).GetComponent<item>().increment();
+            GameObject.Find(_item.name.Substring(0,(_item.name.Length - 7))).GetComponent<item>().increment();
+
+           // GameObject.FindGameObjectWithTag(InternalEditorUtility.tags[_item.GetComponent<item>().tagSet]).GetComponentInChildren<text>().setNewNum();
+            GameObject.Find(_item.name.Substring(0, (_item.name.Length - 7))).GetComponentInChildren<text>().setNewNum();
             Destroy(_item);
         }
     }
@@ -151,7 +155,8 @@ public class item : MonoBehaviour
             amount--;
             _item.GetComponentInChildren<text>().setNewNum();
 
-            craft.tag = UnityEditorInternal.InternalEditorUtility.tags[craft.GetComponent<item>().tagSet + 1];
+           // craft.tag = UnityEditorInternal.InternalEditorUtility.tags[craft.GetComponent<item>().tagSet + 1];
+
         }
     }
 }

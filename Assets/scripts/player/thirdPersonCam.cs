@@ -14,7 +14,7 @@ public class thirdPersonCam : MonoBehaviour {
     private const float MAX_ZOOM = 2.5f;
     private const float MIN_ZOOM = 15f;
 
-    private float shiftx = 2f;
+    //private float shiftx = 2f;
     private float shiftz = 3f;
     public bool mouse = false;
     //private Camera cam;
