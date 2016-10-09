@@ -53,7 +53,8 @@ public class item : MonoBehaviour
     }
     void OnMouseOver()
     {
-        print(_item.name);
+        if (!gameObject.activeSelf) return;
+        //print(_item.name);
         isMouseOver = true;
         if (!otherflag && !isCrafting && !isOnMouseDown)
         {
@@ -87,6 +88,7 @@ public class item : MonoBehaviour
     }
     void OnMouseExit()
     {
+        if (!gameObject.activeSelf) return;
         isMouseOver = false;
         if (!isCrafting)
         {
@@ -98,6 +100,7 @@ public class item : MonoBehaviour
     }
     void OnMouseDown()
     {
+        if (!gameObject.activeSelf) return;
         if (!isCrafting)
         {
 
@@ -155,7 +158,7 @@ public class item : MonoBehaviour
             amount--;
             _item.GetComponentInChildren<text>().setNewNum();
 
-           // craft.tag = UnityEditorInternal.InternalEditorUtility.tags[craft.GetComponent<item>().tagSet + 1];
+            craft.tag = "itemcraft";
 
         }
     }

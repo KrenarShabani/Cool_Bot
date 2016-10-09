@@ -4,17 +4,17 @@ using System.Collections;
 public class charinventory : MonoBehaviour {
     private static string INVENTORY;
     private static string _inventory;
-    static int[] items;
+    static string[] items;
     static int size = 0;
 	// Use this for initialization
 	void Start () {
         _inventory = "inventory";
-        items = new int[10];
+        items = new string[10];
         
         //print(PlayerPrefs.GetInt("9"));
         //PlayerPrefs.DeleteAll();        
         if (PlayerPrefs.GetString(_inventory) != null)
-            INVENTORY = PlayerPrefs.GetString(_inventory);
+           INVENTORY = PlayerPrefs.GetString(_inventory);
            // INVENTORY = "13,11,9";
        // PlayerPrefs.SetInt("15", 0);
 	}
@@ -24,36 +24,36 @@ public class charinventory : MonoBehaviour {
 	
 	}
 
-    public static void addItem(int tag)
+    public static void addItem(string tag)
     {
-
-        items[size] = tag;
+        
+        //items[size] = tag;
         // print(items[size]);
         size++;
 
-        if (PlayerPrefs.GetInt(tag.ToString()) != 0)
+        if (PlayerPrefs.GetInt(tag) != 0 || PlayerPrefs.HasKey(tag))
         {
-            PlayerPrefs.SetInt(tag.ToString(), PlayerPrefs.GetInt(tag.ToString()) + 1);
+            PlayerPrefs.SetInt(tag, PlayerPrefs.GetInt(tag) + 1);
         }
         else
         {
 
-            PlayerPrefs.SetInt(tag.ToString(), 1);
+            PlayerPrefs.SetInt(tag, 1);
             if (INVENTORY == null)
             {
-                INVENTORY = tag.ToString();
+                INVENTORY = tag;
                 //print(INVENTORY);
             }
             else
             {
-                INVENTORY += "," + tag.ToString();
+                INVENTORY += "," + tag;
                 //print(INVENTORY);            
             }
             PlayerPrefs.SetString(_inventory, INVENTORY);
         }
         //PlayerPrefs.SetString(_inventory, INVENTORY);
         print(PlayerPrefs.GetString(_inventory));
-        print(PlayerPrefs.GetInt(tag.ToString()));
+        print(PlayerPrefs.GetInt(tag));
     }
 
     public static bool isFull()

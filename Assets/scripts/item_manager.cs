@@ -24,6 +24,22 @@ public class item_manager: MonoBehaviour {
 
     void Start ()
     {
+        /*
+        Hashtable a = new Hashtable();
+        a.Add("glass", 1);
+        if (a.ContainsKey("glass")) 
+        {
+            a["glass"] = 2;
+        }
+        else
+            a.Add("glass", 2);
+        ICollection ke = a.Keys;
+        foreach (string k in ke)
+        {
+            print(k + " : " + a[k]);
+        }*/
+
+
         items = GetComponentsInChildren<item>();
         for (int i = 0; i < items.Length; i++)
         {
@@ -34,12 +50,15 @@ public class item_manager: MonoBehaviour {
         {
             
             crafts = Utilities.getCrafts();
+            if(crafts!=null)
             foreach (string s in crafts)
             {
-                //print(s);
-                if (GameObject.FindGameObjectWithTag(UnityEditorInternal.InternalEditorUtility.tags[Int32.Parse(s)]))
+               // print(s);
+                //if (GameObject.FindGameObjectWithTag(UnityEditorInternal.InternalEditorUtility.tags[Int32.Parse(s)]))
+                if(GameObject.Find(s+"(Clone)"))
                 {
-                    GameObject newmat = GameObject.FindGameObjectWithTag(UnityEditorInternal.InternalEditorUtility.tags[Int32.Parse(s)]);
+                   // GameObject newmat = GameObject.FindGameObjectWithTag(UnityEditorInternal.InternalEditorUtility.tags[Int32.Parse(s)]);
+                    GameObject newmat = GameObject.Find(s + "(Clone)");
                    // print(GameObject.FindGameObjectWithTag(UnityEditorInternal.InternalEditorUtility.tags[Int32.Parse(s)]));
                     newmat.GetComponent<item>().setAmount(newmat.GetComponent<item>().getAmount() + PlayerPrefs.GetInt(s));
                     newmat.GetComponentInChildren<text>().setNewNum();
@@ -52,8 +71,8 @@ public class item_manager: MonoBehaviour {
                     //print(UnityEditorInternal.InternalEditorUtility.tags[Int32.Parse(s)]);
                     //print("Assets/prefabs/item prefabs/" + UnityEditorInternal.InternalEditorUtility.tags[Int32.Parse(s)] + ".prefab");
                   
-                    inst = (GameObject)Instantiate((GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/prefabs/item prefabs/" + UnityEditorInternal.InternalEditorUtility.tags[Int32.Parse(s)] + ".prefab", typeof(GameObject)));
-
+                    //inst = (GameObject)Instantiate((GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/prefabs/item prefabs/" + UnityEditorInternal.InternalEditorUtility.tags[Int32.Parse(s)] + ".prefab", typeof(GameObject)));
+                    inst = (GameObject)Instantiate((GameObject)Resources.Load(s, typeof(GameObject)));
                     reveal(inst);
 
 
@@ -88,12 +107,13 @@ public class item_manager: MonoBehaviour {
 
     void reveal(GameObject item)
     {
-        item.tag = UnityEditorInternal.InternalEditorUtility.tags[item.GetComponent<item>().tagSet];
+        item.tag = "item";
         if (item.GetComponent<Renderer>().enabled == false)
             item.GetComponent<Renderer>().enabled = true;
         item.transform.parent = GameObject.Find("items").transform;
         setPos(item);
-        item.GetComponent<item>().setAmount(PlayerPrefs.GetInt(item.GetComponent<item>().tagSet.ToString()));
+        //item.GetComponent<item>().setAmount(PlayerPrefs.GetInt(item.GetComponent<item>().tagSet.ToString()));
+        item.GetComponent<item>().setAmount(PlayerPrefs.GetInt(item.name.Substring(0,(item.name.Length - 7))));
         item.GetComponentInChildren<text>().setNewNum();
     }
     public void setPos(GameObject item)
@@ -141,16 +161,21 @@ public class item_manager: MonoBehaviour {
     }
     private IEnumerator cleanUp(int[] needed, string[] recipe)
     {
+        string name;
         for (int i = 0; i < needed.Length; i++)
         {
-            GameObject[] temp = GameObject.FindGameObjectsWithTag(recipe[i]);
-            PlayerPrefs.SetInt(temp[0].GetComponent<item>().tagSet.ToString(), PlayerPrefs.GetInt(temp[0].GetComponent<item>().tagSet.ToString()) - temp.Length);
-            for (int j = 0; j < needed[i]; j++)
-            {
-                Destroy(temp[j]);
-            }
+            name = recipe[i].Substring(0, recipe[i].Length - 5) + "(Clone)(Clone)";
+            print (name);
+            print(needed[i]);
+           // GameObject[] temp = new GameObject[needed[i]] ;
+            PlayerPrefs.SetInt(recipe[i].Substring(0, recipe[i].Length - 5), PlayerPrefs.GetInt(recipe[i].Substring(0, recipe[i].Length - 5)) - needed[i]);
 
-            yield return null;
+            for (int k = 0; k < needed[i]; k++) 
+            {
+                Destroy(GameObject.Find(name));   
+                yield return null;
+            }
+          
         }
     }
 }

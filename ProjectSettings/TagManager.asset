@@ -6,19 +6,11 @@ TagManager:
   tags:
   - item
   - itemcraft
-  - rock
-  - rockcraft
-  - metal
-  - metalcraft
-  - energy crystal
-  - energy crystalcraft
-  - new
-  - newcraft
   - itemmanager
   - craftbutton
   - display
   - target
-  - energy
+  - itemIngame
   layers:
   - Default
   - TransparentFX

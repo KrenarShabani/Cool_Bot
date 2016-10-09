@@ -13,7 +13,7 @@ public class recipie : MonoBehaviour
     private GameObject createe;
     public TextMesh requirements;
     private string[] recipe;
-    private int[] needed;
+    private Hashtable needed;
     private int[] ingredients;
     private bool flag = true;
     private Vector3 loc = new Vector3(5.3f, 6, 0);
@@ -34,9 +34,24 @@ public class recipie : MonoBehaviour
         }
 
         recipe = re;
-        needed = ne;
+        //needed = ne;
         createe = cre;
-
+        string item;
+        int amount;
+        needed = new Hashtable();
+        for (int i = 0; i < re.Length; i++) 
+        {
+            amount = ne[i];
+            item = re[i];
+            if (needed.ContainsKey(re[i]))
+            {
+                needed[item] = amount;
+            }
+            else 
+            {
+                needed.Add(item,amount);
+            }
+        }
 
         string display = "\t";
         //display = ("you need:\t");
@@ -47,7 +62,9 @@ public class recipie : MonoBehaviour
         {
             //temp = (GameObject)Instantiate(GameObject.FindGameObjectWithTag(recipe[i].Substring(0, recipe[i].Length - 5)), loc, Quaternion.identity);
             print("Assets/prefabs/item prefabs/" + recipe[i].Substring(0, recipe[i].Length - 5) + ".prefab"); 
-            temp = (GameObject)Instantiate((GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/prefabs/item prefabs/" + recipe[i].Substring(0, recipe[i].Length - 5) + ".prefab", typeof(GameObject)));
+            //temp = (GameObject)Instantiate((GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/prefabs/item prefabs/" + recipe[i].Substring(0, recipe[i].Length - 5) + ".prefab", typeof(GameObject)));
+            print(recipe[i].Substring(0,recipe[i].Length - 5));
+            temp = (GameObject)Instantiate(Resources.Load(recipe[i].Substring(0,recipe[i].Length - 5), typeof(GameObject)));
 
             if (temp.GetComponent<Renderer>().enabled == false)
                 temp.GetComponent<Renderer>().enabled = true;
@@ -58,7 +75,7 @@ public class recipie : MonoBehaviour
             temp.GetComponent<Rigidbody>().detectCollisions = false;
             temp.tag = ("display");
             x -= 3.5f;
-            display += (" x" + needed[i] + " +\t ");
+            display += (" x" + needed[recipe[i]] + " +\t ");
         }
         display = display.Substring(0, display.Length - 3);
         display += '=';
@@ -78,15 +95,38 @@ public class recipie : MonoBehaviour
     }
     public void timeToCraft()
     {
+        GameObject[] counter;
+        Hashtable inBox = new Hashtable();
         if (recipe == null & needed == null)
         {
             print("no recipies selected! (or you didnt calibrate the recipe correctly?)");
             return;
         }
         ingredients = new int[recipe.Length];
+        counter = GameObject.FindGameObjectsWithTag("itemcraft");
+        print(counter.Length);
+        foreach (GameObject o in counter) 
+        {
+            string name = o.name.Substring(0, o.name.Length - 14);
+            name +="craft";
+            //print (name);
+            if (inBox.ContainsKey(name)) 
+            {
+                int num = (int)inBox[name];
+                print(num);
+                num++;
+                inBox[name] = num;
+            }
+            else
+            {
+                inBox.Add(name, 1);
+            }
+        }
+        /*
         for (int i = 0; i < recipe.Length; i++)
         {
-            ingredients[i] = GameObject.FindGameObjectsWithTag(recipe[i]).Length;
+            //ingredients[i] = GameObject.FindGameObjectsWithTag(recipe[i]).Length;
+            
             if (ingredients[i] >= needed[i])
             {
                 flag = true;
@@ -97,6 +137,32 @@ public class recipie : MonoBehaviour
                 break;
             }
         }
+        */
+        ICollection keys = needed.Keys;
+        if (keys.Count != 0)
+            foreach (string k in keys)
+            {
+                print(k);
+
+                print(inBox[k]);
+                if(needed.ContainsKey(k) && inBox.ContainsKey(k))
+                    if ((int)needed[k] <= (int)inBox[k])
+                    {
+                        flag = true;
+                    }
+                    else
+                    {
+                        flag = false;
+                        break;
+                    }
+                else 
+                {
+                    flag = false;
+                }
+            }
+        else flag = false;
+
+        
         if (flag)
         {
             print("we can craft!");
@@ -108,9 +174,11 @@ public class recipie : MonoBehaviour
         parent = GameObject.FindGameObjectWithTag("itemmanager");
         if (flag)
         {
-            if (GameObject.FindGameObjectWithTag(UnityEditorInternal.InternalEditorUtility.tags[createe.GetComponent<item>().tagSet]))
+            //if (GameObject.FindGameObjectWithTag(UnityEditorInternal.InternalEditorUtility.tags[createe.GetComponent<item>().tagSet]))
+            if(GameObject.Find(createe.name+"(Clone)"))
             {
-                GameObject newmat = GameObject.FindGameObjectWithTag(UnityEditorInternal.InternalEditorUtility.tags[createe.GetComponent<item>().tagSet]);
+                //GameObject newmat = GameObject.FindGameObjectWithTag(UnityEditorInternal.InternalEditorUtility.tags[createe.GetComponent<item>().tagSet]);
+                GameObject newmat = GameObject.Find(createe.name + "(Clone)");
                 newmat.GetComponent<item>().increment();
                 newmat.GetComponentInChildren<text>().setNewNum();
             }
@@ -121,15 +189,24 @@ public class recipie : MonoBehaviour
                 parent.GetComponent<item_manager>().setPos(New);
                 New.GetComponent<item>().setAmount(1);
                 New.GetComponentInChildren<text>().setNewNum();
-                New.tag = UnityEditorInternal.InternalEditorUtility.tags[New.GetComponent<item>().tagSet];
+                New.tag = "item";
 
                 if (New.GetComponent<Renderer>().enabled == false)
                     New.GetComponent<Renderer>().enabled = true;
 
             }
-            charinventory.addItem(createe.GetComponent<item>().tagSet);
-            
-            parent.GetComponent<item_manager>().unityFam(needed, recipe);
+            charinventory.addItem(createe.name);
+            int[] junkitems = new int[keys.Count];
+            int i = 0;
+            foreach(string s in keys)
+            {
+                print(s);
+                junkitems[i] =(int)inBox[s];
+                i++;
+               // print(inBox[s]);
+            }
+            //print(junkitems.Length);
+            parent.GetComponent<item_manager>().unityFam(junkitems, recipe);
         }
     }
 }

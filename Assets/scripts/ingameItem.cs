@@ -20,7 +20,7 @@ public class ingameItem : MonoBehaviour {
         {
             if (!charinventory.isFull())
             {
-                charinventory.addItem(tagset);
+                charinventory.addItem(item.gameObject.name);
                 Destroy(item);
             }
          }
