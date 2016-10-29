@@ -112,6 +112,7 @@ public class controler : MonoBehaviour
     public void setPunchBool(bool flag) 
     {
         punchCollider.isTrigger = flag;
+        punchCollider.enabled = flag;
     }
 
             

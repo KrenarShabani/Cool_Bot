@@ -71,10 +71,10 @@ public class thirdPersonCam : MonoBehaviour {
         Quaternion rotation = Quaternion.Euler(currentY * sensivityY, currentX * sensivityX, 0);
         dest = lookAt.position + rotation * dir;
 
-        if (Physics.Linecast(camTransform.position, dest, out hit))
-        {
-            camTransform.position = Vector3.Lerp(camTransform.position, hit.point +hit.normal* 0.5f, 20f * Time.deltaTime);
-        }else
+        //if (Physics.Linecast(camTransform.position, dest, out hit))
+       // {
+       //     camTransform.position = Vector3.Lerp(camTransform.position, hit.point +hit.normal* 0.5f, 20f * Time.deltaTime);
+        //}else
             camTransform.position = Vector3.Lerp(camTransform.position, dest, Time.deltaTime * 20f);
 
         // if(currentY>= lookAt.position.y)

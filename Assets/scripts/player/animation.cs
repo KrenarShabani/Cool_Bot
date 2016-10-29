@@ -9,6 +9,7 @@ public class animation : StateMachineBehaviour {
         if (stateInfo.IsName("punching")) 
         {
             animator.GetComponent<controler>().setPunchBool(true);
+            
         }
 	}
 
