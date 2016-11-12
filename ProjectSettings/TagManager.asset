@@ -11,6 +11,10 @@ TagManager:
   - display
   - target
   - itemIngame
+  - metal
+  - energy
+  - enemy
+  - new
   layers:
   - Default
   - TransparentFX
@@ -21,7 +25,7 @@ TagManager:
   - 
   - 
   - inventory
-  - 
+  - enemies
   - 
   - 
   - 

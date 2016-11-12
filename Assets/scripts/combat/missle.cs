@@ -2,16 +2,39 @@
 using System.Collections;
 
 public class missle : MonoBehaviour {
-    private GameObject target;
+    private Transform target;
     public GameObject bullet;
+    private float force;
+    private bool IsLocked;
+
+    bool onlyOnce = true;
 	// Use this for initialization
 	void Start () {
-        target = GameObject.FindGameObjectWithTag("target");
+        Destroy(bullet, 5);
 	}
 	
 	// Update is called once per frame
-	void FixedUpdate () {
-        if(target != null)
-        bullet.transform.position = Vector3.Lerp(bullet.transform.position, target.transform.position, Time.deltaTime * 2f);
+	void FixedUpdate () 
+    {
+        if (IsLocked && target != null) 
+        {
+            bullet.GetComponent<Rigidbody>().useGravity = false;
+            //print("moveing");
+            bullet.transform.position = Vector3.Lerp(bullet.transform.position, target.position + 4f * Vector3.up, 3f * Time.deltaTime);
+        }
+        else if(onlyOnce)
+        {
+            bullet.GetComponent<Rigidbody>().AddForce(transform.forward* force);
+            onlyOnce = false;
+        }
+        
 	}
+
+    public void setValues(bool isLocked, Transform targ, float f) 
+    {
+        IsLocked = isLocked;
+        target = targ;
+        force = f;
+    }
+
 }

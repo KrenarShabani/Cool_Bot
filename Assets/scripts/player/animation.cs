@@ -6,10 +6,9 @@ public class animation : StateMachineBehaviour {
 	 
 	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) 
     {
-        if (stateInfo.IsName("punching")) 
+        if (stateInfo.IsName("punching") || stateInfo.IsName("shoot")) 
         {
             animator.GetComponent<controler>().setPunchBool(true);
-            
         }
 	}
 
@@ -21,13 +20,18 @@ public class animation : StateMachineBehaviour {
             animator.SetTrigger("punch");
             //punchCollider.isTrigger = true;
         }
+        if ((Input.GetKeyDown(KeyCode.E)  || Input.GetMouseButton(1)) && !animator.GetCurrentAnimatorStateInfo(0).IsName("shoot") && animator.GetAnimatorTransitionInfo(0).normalizedTime < 0.10f)
+        {
+            animator.SetTrigger("shoot");
+            //punchCollider.isTrigger = true;
+        }
 	
 	}
 
 	// OnStateExit is called when a transition ends and the state machine finishes evaluating this state
 	override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) 
     {
-        if (!stateInfo.IsName("punching"))
+        if (!stateInfo.IsName("punching") || !stateInfo.IsName("shoot"))
         {            
             animator.GetComponent<controler>().setPunchBool(false);
         }

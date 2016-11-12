@@ -4,8 +4,10 @@ using UnityEngine.SceneManagement;
 
 public class controler : MonoBehaviour
 {
+    //public Transform lowerbody;
+    
     public float speed = 10.0f;
-    float jumpSpeed = 8.0f;
+    float jumpSpeed = 14.0f;
     float gravity = 20.0f;
     private Vector3 moveDirection = Vector3.zero;
     private CharacterController controller;
@@ -18,6 +20,7 @@ public class controler : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+
         Component[] test;
         test = GetComponentsInChildren<BoxCollider>();
         //print(test.Length);
@@ -55,6 +58,7 @@ public class controler : MonoBehaviour
 
             if (Input.GetButtonDown("Jump") && !ani.GetCurrentAnimatorStateInfo(0).IsName("punching") && !ani.IsInTransition(0))
             {
+                //Debug.Break();
                 moveDirection.y = jumpSpeed;
                 ani.SetBool("isInTheAir", true);
             }
@@ -76,13 +80,13 @@ public class controler : MonoBehaviour
         moveDirection.y -= gravity * Time.deltaTime;
         //transform.rotation.Set(0, 0, 0, 0);
 
-        if (((Input.GetKey(KeyCode.W) || (Input.GetKey(KeyCode.S))) || (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))))
+        if (  ( Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) ) || ( Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D) )  )  
         {
-            if (!ani.GetCurrentAnimatorStateInfo(0).IsName("punching"))
+            if (!ani.GetCurrentAnimatorStateInfo(0).IsName("punching") && !ani.GetCurrentAnimatorStateInfo(0).IsName("shoot"))
             {
                 transform.rotation = Quaternion.Lerp(preserve, Quaternion.LookRotation(Input.GetAxis("Horizontal") * right + Input.GetAxis("Vertical") * forward), 12f * Time.deltaTime);
-                
-            } 
+            }
+
            ani.SetBool("ismoving", true);
            // controller.Move(moveDirection * Time.deltaTime);
            // ani.Play("walking", -1, 0f);
@@ -98,6 +102,28 @@ public class controler : MonoBehaviour
         { 
             controller.Move(moveDirection * Time.deltaTime);
         }
+        if (ani.GetCurrentAnimatorStateInfo(0).IsName("shoot")) 
+        {
+            Quaternion shootrot = new Quaternion(0f, gCam.transform.rotation.y, 0f, gCam.transform.rotation.w);  //--------------------needs tweaking
+            transform.rotation = Quaternion.Lerp(transform.rotation,shootrot, 1f);
+            //transform.rotation = shootrot;
+
+        }
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+        {
+            if(Input.GetKey(KeyCode.A))
+                ani.SetBool("left press", true);
+            if (Input.GetKey(KeyCode.D)) 
+            {
+                ani.SetBool("right press", true);
+            }
+        }
+        else
+        {
+            ani.SetBool("right press", false);
+            ani.SetBool("left press", false);
+        }
+
 
         //print(transform.rotation + " " + Input.GetAxis("Vertical") + " " + Input.GetAxis("Horizontal"));
        // preserve = new Quaternion(transform.rotation.x, transform.rotation.y, transform.rotation.z, transform.rotation.w);
@@ -106,7 +132,12 @@ public class controler : MonoBehaviour
         //transform.rotation.SetLookRotation((Input.GetAxis("Horizontal") * right + Input.GetAxis("Vertical") * forward));
         if (Input.GetKey(KeyCode.I))
             SceneManager.LoadScene("inventory");
-
+        ani.SetFloat("InputH", Input.GetAxis("Horizontal"));
+        ani.SetFloat("InputV", Input.GetAxis("Vertical"));
+        if (Input.GetKey(KeyCode.Alpha1)) 
+        {
+            ani.SetBool("bomber", true);
+        }
     }
 
     public void setPunchBool(bool flag) 

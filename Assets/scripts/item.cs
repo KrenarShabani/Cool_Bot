@@ -42,6 +42,8 @@ public class item : MonoBehaviour
             var LayerMask = 1 << 8;
             var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             Debug.DrawRay(ray.origin, ray.direction * 74f, Color.cyan);
+
+            // this is what makes the item move in a snappy fashion and it also makes sure they dont overlap
             if (Physics.Raycast(ray, out hit, 74f, LayerMask))
             {
                 int hitColliders = (Physics.OverlapBox(new Vector3(hit.point.x, hit.point.y, hit.point.z), new Vector3(1, 1, 1))).Length;

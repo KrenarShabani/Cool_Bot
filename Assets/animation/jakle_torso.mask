@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1011 &101100000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: jakle_torso
+  m_Mask: 00000000010000000100000000000000000000000100000001000000010000000100000000000000000000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: Armature
+    m_Weight: 1
+  - m_Path: Armature/root
+    m_Weight: 1
+  - m_Path: Armature/root/leg_Control_L
+    m_Weight: 1
+  - m_Path: Armature/root/leg_Control_L/Anckle_L
+    m_Weight: 1
+  - m_Path: Armature/root/leg_Control_L/Anckle_L/foot_L
+    m_Weight: 1
+  - m_Path: Armature/root/leg_Control_R
+    m_Weight: 1
+  - m_Path: Armature/root/leg_Control_R/Anckle_R
+    m_Weight: 1
+  - m_Path: Armature/root/leg_Control_R/Anckle_R/foot_R
+    m_Weight: 1
+  - m_Path: Armature/root/Torso
+    m_Weight: 1
+  - m_Path: Armature/root/Torso/arm_L
+    m_Weight: 1
+  - m_Path: Armature/root/Torso/arm_L/Forearm_L
+    m_Weight: 1
+  - m_Path: Armature/root/Torso/arm_L/Forearm_L/hand_L
+    m_Weight: 1
+  - m_Path: Armature/root/Torso/arm_L/Forearm_L/hand_L/digit_L
+    m_Weight: 1
+  - m_Path: Armature/root/Torso/arm_L/Forearm_L/thumb_L
+    m_Weight: 1
+  - m_Path: Armature/root/Torso/arm_L/Forearm_L/thumb_L/thumb1_L
+    m_Weight: 1
+  - m_Path: Armature/root/Torso/arm_R
+    m_Weight: 1
+  - m_Path: Armature/root/Torso/arm_R/Forearm_R
+    m_Weight: 1
+  - m_Path: Armature/root/Torso/arm_R/Forearm_R/hand_R
+    m_Weight: 1
+  - m_Path: Armature/root/Torso/arm_R/Forearm_R/hand_R/digit_R
+    m_Weight: 1
+  - m_Path: Armature/root/Torso/arm_R/Forearm_R/thumb_R
+    m_Weight: 1
+  - m_Path: Armature/root/Torso/arm_R/Forearm_R/thumb_R/thumb1_R
+    m_Weight: 1
+  - m_Path: Armature/root/Torso/neck2
+    m_Weight: 1
+  - m_Path: Armature/root/Torso/neck2/neck1
+    m_Weight: 1
+  - m_Path: Armature/root/Torso/neck2/neck1/Head
+    m_Weight: 1
+  - m_Path: Armature/root/Torso/thigh_L
+    m_Weight: 1
+  - m_Path: Armature/root/Torso/thigh_L/shin_L
+    m_Weight: 1
+  - m_Path: Armature/root/Torso/thigh_R
+    m_Weight: 1
+  - m_Path: Armature/root/Torso/thigh_R/shin_R
+    m_Weight: 1
+  - m_Path: Cube_001
+    m_Weight: 1

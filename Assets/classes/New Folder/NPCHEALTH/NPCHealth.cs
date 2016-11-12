@@ -11,16 +11,17 @@ public class NPCHealth : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	 
+        
 	}
 
     public void Die() 
     {
+        GameObject.Find("Jackle").GetComponentInChildren<lockOnAssists>().hasDied(this.gameObject);
         ani.SetBool("dead", true);
-        StartCoroutine("rmObject");
+        Destroy(this.gameObject, 3);
     }
 
-    public void getHit(int dmg) //----------------------------------------------------needs tweaking
+    public void getHit(int dmg) 
     {
         health -= dmg;
 
@@ -32,10 +33,7 @@ public class NPCHealth : MonoBehaviour {
         {
             ani.SetTrigger("flinched");
         }
+        print(this.name + " " + health);
     }
 
-    IEnumerator rmObject() { 
-        yield return new WaitForSeconds(5);
-        Destroy(this.gameObject);
-    }
 }

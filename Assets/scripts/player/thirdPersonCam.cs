@@ -26,13 +26,13 @@ public class thirdPersonCam : MonoBehaviour {
     public float sensivityX = 4f;
     public float sensivityY = 1f;
 
-
+    private Animator ani;
 
     private void Start()
     {
         //Vector3 dir = new Vector3(0, 0, -distance);
         // Quaternion rotation = Quaternion.Euler(currentY * sensivityY, currentX * sensivityX, 0);
-
+        ani = GameObject.Find("Jackle").GetComponent<Animator>();
         dis = MIN_ZOOM;
         camTransform = transform;
         //cam = Camera.main;
@@ -42,6 +42,7 @@ public class thirdPersonCam : MonoBehaviour {
     {
         currentX += Input.GetAxis("Mouse X");
         currentY += Input.GetAxis("Mouse Y");
+        //ani.SetFloat("InputMouseH", (currentX %90 - (lookAt.transform.eulerAngles.y/4)) );
         currentY = Mathf.Clamp(currentY, Y_ANGLE_MIN, Y_ANGLE_MAX);
         dis += Input.GetAxis("Mouse ScrollWheel");
         dis = Mathf.Clamp(dis, MAX_ZOOM, MIN_ZOOM);
@@ -59,7 +60,7 @@ public class thirdPersonCam : MonoBehaviour {
 
     private void LateUpdate()
     {
-        RaycastHit hit;
+        //RaycastHit hit;
         Vector3 dir;
         if (!mouse)
             dir = new Vector3(0, 0, -dis);
@@ -84,7 +85,7 @@ public class thirdPersonCam : MonoBehaviour {
         camTransform.LookAt(lookAt.position + 4f * Vector3.up );
 
         camTransform.Rotate(-10f,0f, 0f);
-        
+        ani.SetFloat("InputMouseH", ( Mathf.Clamp(camTransform.rotation.y - lookAt.rotation.y , -.3f, .3f)));
         
        // print(currentY);
     }

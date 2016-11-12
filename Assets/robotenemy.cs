@@ -81,21 +81,16 @@ public class robotenemy : MonoBehaviour{
         if (ani.GetNextAnimatorStateInfo(0).IsName("dead")) return;
 
 
-        if (other.name == "Jackle") 
+
+        if (other.name == "attackCollider") 
         {
-            ani.SetTrigger("test");
-            HasSeenPlayer = true;
-            player = other.transform;
-            ani.SetBool("enemyseen", true);
-            //transform.LookAt(other.transform.position);
-        }
-        else if (other.name == "attackCollider") 
-        {
+            enemycontroller.SimpleMove(new Vector3(5f,5f,5f));
             healthsys.getHit(5);
         }
         else if (other.name == "bullet(Clone)") 
         {
             healthsys.getHit(10);
+            Destroy(other.gameObject, 0.1f);
         }
     }
 
@@ -107,5 +102,12 @@ public class robotenemy : MonoBehaviour{
     {
         return isAttacking;
     }
-
+    public void setSeenPlayer(bool flag) 
+    {
+        HasSeenPlayer = flag;
+    }
+    public void setPlayer(Transform pla) 
+    {
+        player = pla;
+    }
 }
