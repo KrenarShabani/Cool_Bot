@@ -15,6 +15,7 @@ public class recipie : MonoBehaviour
     private string[] recipe;
     private Hashtable needed;
     private int[] ingredients;
+    private int[] nedled;
     private bool flag = true;
     private Vector3 loc = new Vector3(5.3f, 6, 0);
 
@@ -33,6 +34,7 @@ public class recipie : MonoBehaviour
             Destroy(old[i]);
         }
 
+        nedled = ne;
         recipe = re;
         //needed = ne;
         createe = cre;
@@ -196,17 +198,8 @@ public class recipie : MonoBehaviour
 
             }
             charinventory.addItem(createe.name);
-            int[] junkitems = new int[keys.Count];
-            int i = 0;
-            foreach(string s in keys)
-            {
-                print(s);
-                junkitems[i] =(int)inBox[s];
-                i++;
-               // print(inBox[s]);
-            }
             //print(junkitems.Length);
-            parent.GetComponent<item_manager>().unityFam(junkitems, recipe);
+            parent.GetComponent<item_manager>().unityFam(nedled, recipe);
         }
     }
 }

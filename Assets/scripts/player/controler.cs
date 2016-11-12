@@ -16,6 +16,7 @@ public class controler : MonoBehaviour
     public Camera gCam;
     public Animator ani;
     private BoxCollider punchCollider;
+    public GameObject bomber;
     private Quaternion preserve = new Quaternion();
     // Use this for initialization
     void Start()
@@ -82,7 +83,7 @@ public class controler : MonoBehaviour
 
         if (  ( Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) ) || ( Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D) )  )  
         {
-            if (!ani.GetCurrentAnimatorStateInfo(0).IsName("punching") && !ani.GetCurrentAnimatorStateInfo(0).IsName("shoot"))
+            if (!ani.GetCurrentAnimatorStateInfo(0).IsName("punching") && !ani.GetBool("ratatat"))
             {
                 transform.rotation = Quaternion.Lerp(preserve, Quaternion.LookRotation(Input.GetAxis("Horizontal") * right + Input.GetAxis("Vertical") * forward), 12f * Time.deltaTime);
             }
@@ -102,7 +103,7 @@ public class controler : MonoBehaviour
         { 
             controller.Move(moveDirection * Time.deltaTime);
         }
-        if (ani.GetCurrentAnimatorStateInfo(0).IsName("shoot")) 
+        if (ani.GetBool("ratatat")) 
         {
             Quaternion shootrot = new Quaternion(0f, gCam.transform.rotation.y, 0f, gCam.transform.rotation.w);  //--------------------needs tweaking
             transform.rotation = Quaternion.Lerp(transform.rotation,shootrot, 1f);
@@ -134,9 +135,18 @@ public class controler : MonoBehaviour
             SceneManager.LoadScene("inventory");
         ani.SetFloat("InputH", Input.GetAxis("Horizontal"));
         ani.SetFloat("InputV", Input.GetAxis("Vertical"));
-        if (Input.GetKey(KeyCode.Alpha1)) 
+        if (Input.GetKeyDown(KeyCode.Alpha1)) 
         {
-            ani.SetBool("bomber", true);
+            if (ani.GetBool("bomber"))
+            {
+                ani.SetBool("bomber", false);
+                bomber.GetComponent<MeshRenderer>().enabled = false;
+            }
+            else
+            {
+                ani.SetBool("bomber", true);
+                bomber.GetComponent<MeshRenderer>().enabled = true;
+            }
         }
     }
 

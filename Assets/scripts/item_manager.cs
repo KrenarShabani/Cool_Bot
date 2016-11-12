@@ -169,7 +169,7 @@ public class item_manager: MonoBehaviour {
             print(needed[i]);
            // GameObject[] temp = new GameObject[needed[i]] ;
             PlayerPrefs.SetInt(recipe[i].Substring(0, recipe[i].Length - 5), PlayerPrefs.GetInt(recipe[i].Substring(0, recipe[i].Length - 5)) - needed[i]);
-
+            //GameObject[] list = GameObject.Find(name);
             for (int k = 0; k < needed[i]; k++) 
             {
                 Destroy(GameObject.Find(name));   

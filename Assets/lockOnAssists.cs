@@ -18,11 +18,11 @@ public class lockOnAssists : MonoBehaviour {
 	void Update () 
     {
         var ray = Camera.main.ScreenPointToRay(cam.transform.position);
- 
+        //var ray = Camera.main.ScreenPointToRay(GameObject.Find("Jackle").transform.position);
         //ray.origin = cam.transform.position;
 
         ray.direction = (GameObject.Find("Jackle").transform.position - cam.transform.position) + 5f * Vector3.up;
-        
+       // ray.direction = (GameObject.Find("Jackle").transform.position);
         Debug.DrawRay(ray.origin, ray.direction * 55f, Color.red);
         if (Physics.Raycast(ray, out hit, 55f, NonIgnore) &&
             hit.collider != null && hit.collider.tag == "enemy" && 
