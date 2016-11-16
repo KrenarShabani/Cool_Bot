@@ -18,10 +18,14 @@ public class bullet: MonoBehaviour
 
     bool RPM = true;
 
+    public GameObject Bomb;
+
+    private GameObject PTRbullet;
 
     // Use this for initialization
     void Start()
     {
+        PTRbullet = Bullet;
         lockonsys = GameObject.Find("Jackle").GetComponentInChildren<lockOnAssists>();
     }
 
@@ -45,8 +49,8 @@ public class bullet: MonoBehaviour
 
             //The Bullet instantiation happens here.
 
-            GameObject temp = Instantiate(Bullet, Bullet_Emitter.transform.position, Bullet_Emitter.transform.rotation) as GameObject;
-            temp.GetComponent<missle>().setValues(LockedON, enemylocked, Bullet_Forward_Force);
+            GameObject temp = Instantiate(PTRbullet, Bullet_Emitter.transform.position, Bullet_Emitter.transform.rotation) as GameObject;
+            temp.GetComponent<missle>().setValues(LockedON, enemylocked);
 
             RPM = false;
             StartCoroutine(reset(.2f));
@@ -60,7 +64,18 @@ public class bullet: MonoBehaviour
         {
             GameObject.Find("Jackle").GetComponent<controler>().ani.SetBool("ratatat", false);
         }
-        
+
+        if (Input.GetKeyDown(KeyCode.Alpha1)) 
+        {
+            if (PTRbullet.name == Bullet.name)
+            {
+                PTRbullet = Bomb;
+            }
+            else 
+            {
+                PTRbullet = Bullet;
+            }
+        }
     }
 
     IEnumerator reset(float time) 

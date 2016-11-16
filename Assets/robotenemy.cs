@@ -4,7 +4,7 @@ using System.Collections;
 public class robotenemy : MonoBehaviour{ 
     private CharacterController enemycontroller;
     private Vector3 moveDirection = Vector3.zero;
-    private float gravity = 20.0f;
+    private float gravity = 20f;
     public GameObject route;
     public Animator ani;
     private bool HasSeenPlayer = false;
@@ -15,7 +15,8 @@ public class robotenemy : MonoBehaviour{
     private NPCHealth healthsys;
     //routes will always have an null transform at the end of the array
     private Transform[] routes;
-    
+    public Transform armature;
+    public float speed;
     private int checkpoint = 0;
 	// Use this for initialization
 	void Start () {
@@ -47,16 +48,29 @@ public class robotenemy : MonoBehaviour{
 
         }
         else if (ani.GetBool("dead")) {  } //---------------------------------------------- this is unoptomised
-        else if (!isAttacking && 
-            !ani.GetNextAnimatorStateInfo(0).IsName("attack") &&
-            !ani.GetNextAnimatorStateInfo(0).IsName("suprised") && ((float)Vector3.Distance(transform.position,player.position) > 2f) &&
-            !ani.GetBool("dead"))
+        else if (ani.GetCurrentAnimatorStateInfo(0).IsName("running") && ((float)Vector3.Distance(transform.position, player.position) > 4f)
+            && !ani.GetCurrentAnimatorStateInfo(1).IsName("explode"))
         {
             transform.position = Vector3.MoveTowards(enemycontroller.transform.position, player.position, 10f * Time.deltaTime);
             transform.LookAt(player);
+            
+            ani.SetBool("closeEnough", false);
         }
-        moveDirection.y -= gravity;
+        else 
+        {
+            if(!((float)Vector3.Distance(transform.position, player.position) > 4f))
+            ani.SetBool("closeEnough", true);
+            else ani.SetBool("closeEnough", false);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            moveDirection.y = speed;
+            //moveDirection.x += speed;
+        }
+        moveDirection.y -= gravity * Time.deltaTime;
         enemycontroller.Move(moveDirection);
+
     }
 
     private void shiftAll() 
@@ -82,15 +96,22 @@ public class robotenemy : MonoBehaviour{
 
 
 
-        if (other.name == "attackCollider") 
-        {
-            enemycontroller.SimpleMove(new Vector3(5f,5f,5f));
-            healthsys.getHit(5);
+       // if (other.name == "attackCollider") 
+       // {
+            //GetComponent<CharacterController>().SimpleMove(new Vector3(0f,100f,0f) * 1000f);// this doesnt work
+       //     GetComponent<Rigidbody>().AddExplosionForce(500f, other.GetComponentInParent<controler>().transform.position, 10f,5f);
+       //     healthsys.getHit(5);
+       // }
+       if (other.name == "bullet(Clone)") 
+       {
+           healthsys.getHit(10);
+           Destroy(other.gameObject, 0.1f);
         }
-        else if (other.name == "bullet(Clone)") 
+        if (other.name == "bomb(Clone)") 
         {
-            healthsys.getHit(10);
-            Destroy(other.gameObject, 0.1f);
+            healthsys.getHit(20);
+            ani.SetTrigger("explode");    
+            Destroy(other.gameObject);
         }
     }
 
@@ -109,5 +130,10 @@ public class robotenemy : MonoBehaviour{
     public void setPlayer(Transform pla) 
     {
         player = pla;
+    }
+    public void setExpPos() 
+    {
+        gameObject.transform.position = armature.transform.position;
+    
     }
 }

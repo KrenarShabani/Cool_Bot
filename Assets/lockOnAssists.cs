@@ -60,7 +60,7 @@ public class lockOnAssists : MonoBehaviour {
         if (other.tag == "enemy" ) 
         {
             //print (other.GetComponentInChildren)
-            if (!enemies.Contains(other.gameObject) && !other.GetComponent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("dead"))
+            if (!enemies.Contains(other.gameObject) && !other.GetComponentInParent<Animator>().GetCurrentAnimatorStateInfo(0).IsName("dead"))
             {
                 //print("added to the list! " + other.name);
 

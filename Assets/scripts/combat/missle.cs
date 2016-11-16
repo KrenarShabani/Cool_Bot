@@ -4,7 +4,7 @@ using System.Collections;
 public class missle : MonoBehaviour {
     private Transform target;
     public GameObject bullet;
-    private float force;
+    public float force;
     private bool IsLocked;
 
     bool onlyOnce = true;
@@ -30,11 +30,19 @@ public class missle : MonoBehaviour {
         
 	}
 
-    public void setValues(bool isLocked, Transform targ, float f) 
+    public void setValues(bool isLocked, Transform targ) 
     {
         IsLocked = isLocked;
         target = targ;
-        force = f;
     }
 
+    /*void OnTriggerEnter(Collider other) 
+    {
+        if (other.tag == "enemy") 
+        {
+            other.GetComponentInParent<NPCHealth>().getHit(5);
+            Destroy(gameObject);
+        }
+    
+    }*/
 }

@@ -6,7 +6,7 @@ public class animation : StateMachineBehaviour {
 	 
 	override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) 
     {
-        if (stateInfo.IsName("punching") || stateInfo.IsName("shoot")) 
+        if (stateInfo.IsName("punching")) 
         {
             animator.GetComponent<controler>().setPunchBool(true);
         }
