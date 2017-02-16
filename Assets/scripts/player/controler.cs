@@ -7,7 +7,7 @@ public class controler : MonoBehaviour
     //public Transform lowerbody;
     
     public float speed = 10.0f;
-    float jumpSpeed = 30.0f;
+    float jumpSpeed = 10.0f;
     float gravity = 20.0f;
     private Vector3 moveDirection = Vector3.zero;
     private CharacterController controller;
