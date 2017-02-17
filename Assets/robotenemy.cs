@@ -48,8 +48,8 @@ public class robotenemy : MonoBehaviour{
 
         }
         else if (ani.GetBool("dead")) {  } //---------------------------------------------- this is unoptomised
-        else if (ani.GetCurrentAnimatorStateInfo(0).IsName("running") && ((float)Vector3.Distance(transform.position, player.position) > 4f)
-            && !ani.GetCurrentAnimatorStateInfo(1).IsName("explode"))
+        else if (ani.GetCurrentAnimatorStateInfo(0).IsName("running") && ((float)Vector3.Distance(transform.position, player.position) > 4f))
+           // && !ani.GetCurrentAnimatorStateInfo(0).IsName("explode"))
         {
             transform.position = Vector3.MoveTowards(enemycontroller.transform.position, player.position, 10f * Time.deltaTime);
             transform.LookAt(player);

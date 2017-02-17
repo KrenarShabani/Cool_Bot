@@ -1,7 +1,7 @@
+﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2008
-
-Project("{9792C08F-D25E-4322-EDC9-D4AF23D5502F}") = "Unity_Inventory", "Assembly-CSharp.csproj", "{89C10793-1727-3940-340E-AC60F6894688}"
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unity_Inventory", "Assembly-CSharp.csproj", "{89C10793-1727-3940-340E-AC60F6894688}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -15,7 +15,7 @@ public class charinventory : MonoBehaviour {
         //PlayerPrefs.DeleteAll();        
         if (PlayerPrefs.GetString(_inventory) != null)
            INVENTORY = PlayerPrefs.GetString(_inventory);
-           // INVENTORY = "13,11,9";
+            //INVENTORY = "13,11,9";
        // PlayerPrefs.SetInt("15", 0);
 	}
 	
