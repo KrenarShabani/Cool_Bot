@@ -33,7 +33,7 @@ public class NPCHealth : MonoBehaviour {
         {
             ani.SetTrigger("flinched");
         }
-        print(this.name + " " + health);
+        //print(this.name + " " + health);
     }
 
 }
