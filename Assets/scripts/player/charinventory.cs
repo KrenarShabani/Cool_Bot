@@ -12,7 +12,7 @@ public class charinventory : MonoBehaviour {
         items = new string[10];
         
         //print(PlayerPrefs.GetInt("9"));
-        //PlayerPrefs.DeleteAll();        
+        // PlayerPrefs.DeleteAll();        
         if (PlayerPrefs.GetString(_inventory) != null)
            INVENTORY = PlayerPrefs.GetString(_inventory);
             //INVENTORY = "13,11,9";
