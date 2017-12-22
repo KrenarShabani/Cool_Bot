@@ -58,6 +58,7 @@
      <Compile Include="Assets\prefabs\enemy\enemyanimation.cs" />
      <Compile Include="Assets\punchCollider.cs" />
      <Compile Include="Assets\robotenemy.cs" />
+     <Compile Include="Assets\rotate.cs" />
      <Compile Include="Assets\scripts\Utilities.cs" />
      <Compile Include="Assets\scripts\bullet.cs" />
      <Compile Include="Assets\scripts\combat\missle.cs" />
