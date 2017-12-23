@@ -55,10 +55,13 @@ public class item_manager: MonoBehaviour {
             {
                // print(s);
                 //if (GameObject.FindGameObjectWithTag(UnityEditorInternal.InternalEditorUtility.tags[Int32.Parse(s)]))
-                if(GameObject.Find(s+"(Clone)"))
+                GameObject newmat = GameObject.Find(s+"(Clone)");
+               // if(newmat.GetComponent<item>().getAmount() != 0)
+                if(newmat != null && newmat.tag!=("display"))
                 {
+                
                    // GameObject newmat = GameObject.FindGameObjectWithTag(UnityEditorInternal.InternalEditorUtility.tags[Int32.Parse(s)]);
-                    GameObject newmat = GameObject.Find(s + "(Clone)");
+                    //GameObject newmat = GameObject.Find(s + "(Clone)");
                    // print(GameObject.FindGameObjectWithTag(UnityEditorInternal.InternalEditorUtility.tags[Int32.Parse(s)]));
                     newmat.GetComponent<item>().setAmount(newmat.GetComponent<item>().getAmount() + PlayerPrefs.GetInt(s));
                     newmat.GetComponentInChildren<text>().setNewNum();
@@ -68,8 +71,8 @@ public class item_manager: MonoBehaviour {
                     GameObject inst;
                     //inst = 
                     //inst =  (GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/prefabs/item prefabs/energy crystal", typeof(GameObject));
-                    //print(UnityEditorInternal.InternalEditorUtility.tags[Int32.Parse(s)]);
-                    //print("Assets/prefabs/item prefabs/" + UnityEditorInternal.InternalEditorUtility.tags[Int32.Parse(s)] + ".prefab");
+                   // print(UnityEditorInternal.InternalEditorUtility.tags[Int32.Parse(s)]);
+                   // print("Assets/prefabs/item prefabs/" + UnityEditorInternal.InternalEditorUtility.tags[Int32.Parse(s)] + ".prefab");
                   
                     //inst = (GameObject)Instantiate((GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/prefabs/item prefabs/" + UnityEditorInternal.InternalEditorUtility.tags[Int32.Parse(s)] + ".prefab", typeof(GameObject)));
                     inst = (GameObject)Instantiate((GameObject)Resources.Load(s, typeof(GameObject)));
@@ -86,19 +89,19 @@ public class item_manager: MonoBehaviour {
             }
         }
     }
-    void OnMouseDown()
-    {
-
-    }
     void Update()
     {
 
         if (Input.GetKey(KeyCode.I))
         {
-            foreach (Component i in items) 
+            //print("Something");
+            String rawName;
+            foreach (item i in GetComponentsInChildren<item>()) 
             {
-                //print(i.GetComponent<item>().tagSet);
-                PlayerPrefs.SetInt(i.GetComponent<item>().tagSet.ToString(), i.GetComponent<item>().getAmount());
+                rawName = i.name;
+                if (rawName.Contains("Display")) break;
+                print(rawName.Substring(0, rawName.Length - 7) + i.getAmount());
+                PlayerPrefs.SetInt(rawName.Substring(0,rawName.Length - 7), i.getAmount());
             }
             SceneManager.LoadScene("level");
         }

@@ -63,9 +63,9 @@ public class recipie : MonoBehaviour
         for (int i = 0; i < recipe.Length; i++)
         {
             //temp = (GameObject)Instantiate(GameObject.FindGameObjectWithTag(recipe[i].Substring(0, recipe[i].Length - 5)), loc, Quaternion.identity);
-            print("Assets/prefabs/item prefabs/" + recipe[i].Substring(0, recipe[i].Length - 5) + ".prefab"); 
+           // print("Assets/prefabs/item prefabs/" + recipe[i].Substring(0, recipe[i].Length - 5) + ".prefab"); 
             //temp = (GameObject)Instantiate((GameObject)UnityEditor.AssetDatabase.LoadAssetAtPath("Assets/prefabs/item prefabs/" + recipe[i].Substring(0, recipe[i].Length - 5) + ".prefab", typeof(GameObject)));
-            print(recipe[i].Substring(0,recipe[i].Length - 5));
+            //print(recipe[i].Substring(0,recipe[i].Length - 5));
             temp = (GameObject)Instantiate(Resources.Load(recipe[i].Substring(0,recipe[i].Length - 5), typeof(GameObject)));
 
             if (temp.GetComponent<Renderer>().enabled == false)
@@ -75,6 +75,7 @@ public class recipie : MonoBehaviour
             temp.transform.localPosition = new Vector3(loc.x + x, loc.y);
             temp.GetComponentInChildren<text>().setNull();
             temp.GetComponent<Rigidbody>().detectCollisions = false;
+            temp.name = temp.name.Substring(0,temp.name.Length-7) + "(Display)";
             temp.tag = ("display");
             x -= 3.5f;
             display += (" x" + needed[recipe[i]] + " +\t ");
@@ -90,6 +91,7 @@ public class recipie : MonoBehaviour
         temp.transform.localPosition = new Vector3(loc.x + x, loc.y);
         temp.GetComponentInChildren<text>().setNull();
         temp.GetComponent<Rigidbody>().detectCollisions = false;
+        temp.name = temp.name.Substring(0, temp.name.Length - 7) + "(Display)";
         temp.tag = ("display");
         x -= 3.5f;
         print(display);
