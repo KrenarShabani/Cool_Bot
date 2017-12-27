@@ -2,10 +2,10 @@
 using System.Collections;
 
 public class explosion : MonoBehaviour {
-    private SphereCollider sphere;
+   // private SphereCollider sphere;
 	// Use this for initialization
 	void Start () {
-        sphere = GetComponentInChildren<SphereCollider>();
+     //   sphere = GetComponentInChildren<SphereCollider>();
 	}
 	
 	// Update is called once per frame

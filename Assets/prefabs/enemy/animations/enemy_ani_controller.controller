@@ -605,13 +605,13 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 110279414}
-    m_Position: {x: 252, y: 192, z: 0}
+    m_Position: {x: 252, y: 216, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 110212812}
     m_Position: {x: 252, y: 168, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 110281562}
-    m_Position: {x: 24, y: 12, z: 0}
+    m_Position: {x: -24, y: 12, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 110279948}
     m_Position: {x: 552, y: 48, z: 0}

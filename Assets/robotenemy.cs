@@ -18,6 +18,10 @@ public class robotenemy : MonoBehaviour{
     public Transform armature;
     public float speed;
     private int checkpoint = 0;
+    private Vector3 explosionPoint;
+    private float force=0;
+    private Vector3 trajectroy;
+    private bool inTheAir = false;
 	// Use this for initialization
 	void Start () {
         healthsys = GetComponent<NPCHealth>();
@@ -33,43 +37,53 @@ public class robotenemy : MonoBehaviour{
 
 
 
-
-        if (!HasSeenPlayer && !ani.GetBool("dead"))
+        if (!inTheAir)
         {
-            if (Vector3.Distance(enemycontroller.transform.position, routes[checkpoint].position) < 2)
-                setWayPoint();
-            //print(checkpoint);
-            Vector3 newcheckp = new Vector3(routes[checkpoint].position.x, 0f, routes[checkpoint].position.z);
 
-            //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.FromToRotation(transform.position,routes[checkpoint].position), .1f * Time.deltaTime);
-            transform.LookAt(routes[checkpoint]);
+            if (!HasSeenPlayer && !ani.GetBool("dead"))
+            {
+                if (Vector3.Distance(enemycontroller.transform.position, routes[checkpoint].position) < 2)
+                    setWayPoint();
+                //print(checkpoint);
+                Vector3 newcheckp = new Vector3(routes[checkpoint].position.x, 0f, routes[checkpoint].position.z);
 
-            transform.position = Vector3.MoveTowards(enemycontroller.transform.position, newcheckp, 4.7f * Time.deltaTime);
+                //transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.FromToRotation(transform.position,routes[checkpoint].position), .1f * Time.deltaTime);
+                transform.LookAt(routes[checkpoint]);
 
+                transform.position = Vector3.MoveTowards(enemycontroller.transform.position, newcheckp, 4.7f * Time.deltaTime);
+
+            }
+            else if (ani.GetBool("dead")) { } //---------------------------------------------- this is unoptomised
+            else if (ani.GetCurrentAnimatorStateInfo(0).IsName("running") && ((float)Vector3.Distance(transform.position, player.position) > 4f))
+            // && !ani.GetCurrentAnimatorStateInfo(0).IsName("explode"))
+            {
+                transform.position = Vector3.MoveTowards(enemycontroller.transform.position, player.position, 10f * Time.deltaTime);
+                transform.LookAt(player);
+
+                ani.SetBool("closeEnough", false);
+            }
+            else
+            {
+                if (!((float)Vector3.Distance(transform.position, player.position) > 4f))
+                    ani.SetBool("closeEnough", true);
+                else ani.SetBool("closeEnough", false);
+            }
+            moveDirection.y -= gravity * Time.deltaTime;
+            enemycontroller.Move(moveDirection);
         }
-        else if (ani.GetBool("dead")) {  } //---------------------------------------------- this is unoptomised
-        else if (ani.GetCurrentAnimatorStateInfo(0).IsName("running") && ((float)Vector3.Distance(transform.position, player.position) > 4f))
-           // && !ani.GetCurrentAnimatorStateInfo(0).IsName("explode"))
+        else if (inTheAir) 
         {
-            transform.position = Vector3.MoveTowards(enemycontroller.transform.position, player.position, 10f * Time.deltaTime);
-            transform.LookAt(player);
-            
-            ani.SetBool("closeEnough", false);
-        }
-        else 
+            //print("triggerrerd");
+           // transform.position = Vector3.MoveTowards(enemycontroller.transform.position, trajectroy, force * 200f * Time.deltaTime);
+            enemycontroller.Move(trajectroy * force * 2);
+            trajectroy.y -= gravity * Time.deltaTime;
+        }   
+        else if (!enemycontroller.isGrounded) 
         {
-            if(!((float)Vector3.Distance(transform.position, player.position) > 4f))
-            ani.SetBool("closeEnough", true);
-            else ani.SetBool("closeEnough", false);
+            trajectroy.y -= gravity;
+            transform.position = Vector3.MoveTowards(enemycontroller.transform.position, trajectroy, force * 200f * Time.deltaTime);
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            moveDirection.y = speed;
-            //moveDirection.x += speed;
-        }
-        moveDirection.y -= gravity * Time.deltaTime;
-        enemycontroller.Move(moveDirection);
 
     }
 
@@ -107,12 +121,29 @@ public class robotenemy : MonoBehaviour{
            healthsys.getHit(10);
            Destroy(other.gameObject, 0.1f);
         }
-        if (other.name == "bomb(Clone)") 
+        if (other.name == "BlastRadius") 
         {
+            Vector3 heading;
+            //print("i got hit by the blast radius");
             healthsys.getHit(20);
-            ani.SetTrigger("explode");    
-            Destroy(other.gameObject);
+            explosionPoint = new Vector3(other.transform.position.x, other.transform.position.y, other.transform.position.z);
+            //print(Vector3.Distance(transform.position, explosionPoint));
+            force =  1f / Vector3.Distance(transform.position, explosionPoint);
+            //trajectroy = new Vector3(transform.position.x - explosionPoint.x, transform.position.y - explosionPoint.y, transform.position.z - explosionPoint.z);
+            heading = (transform.position - explosionPoint);
+            trajectroy = heading / heading.magnitude;
+            trajectroy.y += 3f;
+            //ani.SetTrigger("explode");
+            inTheAir = true;
+            StartCoroutine("flying");
+            transform.LookAt(explosionPoint);
+            //Destroy(other.gameObject);
         }
+    }
+    public IEnumerator flying() 
+    {
+        yield return new WaitForSeconds(0.5f);
+        inTheAir = false;
     }
 
     public void setAttacking(bool flag) 

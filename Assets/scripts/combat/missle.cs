@@ -10,7 +10,7 @@ public class missle : MonoBehaviour {
     bool onlyOnce = true;
 	// Use this for initialization
 	void Start () {
-        Destroy(bullet, 5);
+        //Destroy(bullet, 5);
 	}
 	
 	// Update is called once per frame
@@ -36,13 +36,9 @@ public class missle : MonoBehaviour {
         target = targ;
     }
 
-    /*void OnTriggerEnter(Collider other) 
+   /* void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "enemy") 
-        {
-            other.GetComponentInParent<NPCHealth>().getHit(5);
-            Destroy(gameObject);
-        }
-    
+        print(other.name);
+
     }*/
 }

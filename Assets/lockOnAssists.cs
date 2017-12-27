@@ -9,6 +9,7 @@ public class lockOnAssists : MonoBehaviour {
     public LayerMask NonIgnore;
     public GameObject canvas;
     public RectTransform retical;
+    public Animator ani;
 	// Use this for initialization
 	void Start () {
         canvas.GetComponent<Canvas>().enabled = false;
@@ -26,7 +27,8 @@ public class lockOnAssists : MonoBehaviour {
         Debug.DrawRay(ray.origin, ray.direction * 55f, Color.red);
         if (Physics.Raycast(ray, out hit, 55f, NonIgnore) &&
             hit.collider != null && hit.collider.tag == "enemy" && 
-            enemies.Contains(hit.collider.GetComponentInParent<robotenemy>().gameObject))
+            enemies.Contains(hit.collider.GetComponentInParent<robotenemy>().gameObject) &&
+            !ani.GetBool("bomber"))
         {
         //print(hit.collider.name);
 

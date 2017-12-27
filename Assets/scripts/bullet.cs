@@ -16,6 +16,8 @@ public class bullet: MonoBehaviour
     private bool LockedON = false;
     private Transform enemylocked;
 
+    public BoxCollider Blast;
+
     bool RPM = true;
 
     public GameObject Bomb;
@@ -84,6 +86,14 @@ public class bullet: MonoBehaviour
         RPM = true;
     }
 
+    void OnTriggerEnter(Collider other) 
+    {
+        print (other.name);
+        //if (other.gameObject.layer == "ground") 
+       // {
+        
+        //} 
+    }
 
 
 }

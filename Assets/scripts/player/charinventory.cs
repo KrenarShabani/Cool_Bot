@@ -52,8 +52,8 @@ public class charinventory : MonoBehaviour {
             PlayerPrefs.SetString(_inventory, INVENTORY);
         }
         //PlayerPrefs.SetString(_inventory, INVENTORY);
-        print(PlayerPrefs.GetString(_inventory));
-        print(PlayerPrefs.GetInt(tag));
+        //print(PlayerPrefs.GetString(_inventory));
+       // print(PlayerPrefs.GetInt(tag));
     }
 
     public static bool isFull()

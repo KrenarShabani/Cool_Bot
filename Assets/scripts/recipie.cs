@@ -14,7 +14,7 @@ public class recipie : MonoBehaviour
     public TextMesh requirements;
     private string[] recipe;
     private Hashtable needed;
-    private int[] ingredients;
+   // private int[] ingredients;
     private int[] nedled;
     private bool flag = true;
     private Vector3 loc = new Vector3(5.3f, 6, 0);
@@ -106,7 +106,7 @@ public class recipie : MonoBehaviour
             print("no recipies selected! (or you didnt calibrate the recipe correctly?)");
             return;
         }
-        ingredients = new int[recipe.Length];
+        //ingredients = new int[recipe.Length];
         counter = GameObject.FindGameObjectsWithTag("itemcraft");
         print(counter.Length);
         foreach (GameObject o in counter) 

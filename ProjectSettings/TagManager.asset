@@ -15,6 +15,7 @@ TagManager:
   - energy
   - enemy
   - new
+  - blastRadius
   layers:
   - Default
   - TransparentFX
@@ -26,7 +27,7 @@ TagManager:
   - 
   - inventory
   - enemies
-  - 
+  - ground
   - 
   - 
   - 
